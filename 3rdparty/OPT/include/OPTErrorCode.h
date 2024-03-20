@@ -1,0 +1,121 @@
+﻿#ifndef __OPTERRORCODE_H__
+#define __OPTERRORCODE_H__
+
+#define OPT_SUCCEED                                         0 //operation succeed
+#define OPT_ERR_INVALIDHANDLE                               3001001 //invalid handle
+#define OPT_ERR_UNKNOWN                                     3001002 //error unknown
+#define OPT_ERR_INITSERIAL_FAILED                           3001003 //failed to initialize a serial port
+#define OPT_ERR_RELEASESERIALPORT_FAILED                    3001004 //failed to release a serial port
+#define OPT_ERR_SERIALPORT_UNOPENED                         3001005 //attempt to access an unopened serial port
+#define OPT_ERR_CREATEETHECON_FAILED                        3001006 //failed to create an Ethernet connection
+#define OPT_ERR_DESTROYETHECON_FAILED                       3001007 //failed to destroy an Ethernet connection
+#define OPT_ERR_SN_NOTFOUND                                 3001008 //SN is not found
+#define OPT_ERR_TURNONCH_FAILED                             3001009 //failed to turn on the specified channel(s)
+#define OPT_ERR_TURNOFFCH_FAILED                            3001010 //failed to turn off the specified channel(s)
+#define OPT_ERR_SET_INTENSITY_FAILED                        3001011 //failed to set the intensity for the specified channel(s)
+#define OPT_ERR_READ_INTENSITY_FAILED                       3001012 //failed to read the intensity for the specified channel(s)
+#define OPT_ERR_SET_TRIGGERWIDTH_FAILED                     3001013 //failed to set trigger pulse width
+#define OPT_ERR_READ_TRIGGERWIDTH_FAILED                    3001014 //failed to read trigger pulse width
+#define OPT_ERR_READ_HBTRIGGERWIDTH_FAILED                  3001015 //failed to read high brightness trigger pulse width
+#define OPT_ERR_SET_HBTRIGGERWIDTH_FAILED                   3001016 //failed to set high brightness trigger pulse width
+#define OPT_ERR_READ_SN_FAILED                              3001017 //failed to read serial number
+#define OPT_ERR_READ_IPCONFIG_FAILED                        3001018 //failed to read IP address
+#define OPT_ERR_CHINDEX_OUTRANGE                            3001019 //index(es) out of the range
+#define OPT_ERR_WRITE_FAILED                                3001020 //failed to write data
+#define OPT_ERR_PARAM_OUTRANGE                              3001021 //parameter(s) out of the range
+#define OPT_ERR_READ_MAC_FAILED                             3001022 //failed to read MAC
+#define OPT_ERR_SET_MAXCURRENT_FAILED                       3001023 //failed to set max current
+#define OPT_ERR_READ_MAXCURRENT_FAILED                      3001024 //failed to read max current
+#define OPT_ERR_SET_TRIGGERACTIVATION_FAILED                3001025 //failed to set trigger activation
+#define OPT_ERR_READ_TRIGGERACTIVATION_FAILED               3001026 //failed to read trigger activation
+#define OPT_ERR_SET_WORKMODE_FAILED                         3001027 //failed to set work mode
+#define OPT_ERR_READ_WORKMODE_FAILED                        3001028 //failed to read work mode
+#define OPT_ERR_SET_BAUDRATE_FAILED                         3001029 //failed to set baud rate
+#define OPT_ERR_SET_CHANNELAMOUNT_FAILED                    3001030 //failed to set channel amount
+#define OPT_ERR_SET_DETECTEDMINLOAD_FAILED                  3001031 //failed to set detected min load
+#define OPT_ERR_READ_OUTERTRIGGERFREQUENCYUPPERBOUND_FAILED 3001032 //failed to read outer trigger frequency upper bound
+#define OPT_ERR_SET_AUTOSTROBEFREQUENCY_FAILED              3001033 //failed to set auto-strobe frequency
+#define OPT_ERR_READ_AUTOSTROBEFREQUENCY_FAILED             3001034 //failed to read auto-strobe frequency
+#define OPT_ERR_SET_DHCP_FAILED                             3001035 //failed to set DHCP
+#define OPT_ERR_SET_LOADMODE_FAILED                         3001036 //failed to set load mode
+#define OPT_ERR_READ_PROPERTY_FAILED                        3001037 //failed to read property
+#define OPT_ERR_CONNECTION_RESET_FAILED                     3001038 //failed to reset connection
+#define OPT_ERR_SET_HEARTBEAT_FAILED                        3001039 //failed to set ETHERNET connection heartbeat
+#define OPT_ERR_GETCONTROLLERLIST_FAILED                    3001040 //Failed to get controller(s) list
+#define OPT_ERR_SOFTWARETRIGGER_FAILED                      3001041 //Failed to software trigger
+#define OPT_ERR_GET_CHANNELSTATE_FAILED                     3001042 //Failed to get channel State
+#define OPT_ERR_SET_KEEPALIVEPARAMETERS_FAILED              3001043 //Failed to set keepalvie parameters
+#define OPT_ERR_ENABLE_KEEPALIVE_FAILED                     3001044 //Failed to enable/disable keepalive
+#define OPT_ERR_READSTEPCOUNT_FAILED                        3001045 //Failed to read step count
+#define OPT_ERR_SETTRIGGERMODE_FAILED                       3001046 //Failed to set trigger mode
+#define OPT_ERR_READTRIGGERMODE_FAILED                      3001047 //Failed to read trigger mode
+#define OPT_ERR_SETCURRENTSTEPINDEX_FAILED                  3001048 //Failed to set current step index
+#define OPT_ERR_READCURRENTSTEPINDEX_FAILED                 3001049 //Failed to read current step index
+#define OPT_ERR_RESETSEQ_FAILED                             3001050 //Failed to reset current step index
+#define OPT_ERR_SETTRIGGERDELAY_FAILED                      3001051 //Failed to set trigger delay
+#define OPT_ERR_GET_TRIGGERDELAY_FAILED                     3001052 //Failed to get trigger delay
+#define OPT_ERR_SETMULTITRIGGERDELAY_FAILED                 3001053 //Failed to set multiple channels trigger delay
+#define OPT_ERR_SETSEQTABLEDATA_FAILED                      3001054 //Failed to set SEQ table data
+#define OPT_ERR_READSEQTABLEDATA_FAILED                     3001055 //Failed to Read SEQ table data
+#define OPT_ERR_READ_CHANNELS_FAILED                        3001056 //Failed to read controller's channel
+#define OPT_ERR_READ_KEEPALIVE_STATE_FAILED                 3001057 //Failed to read the state of keepalive
+#define OPT_ERR_READ_KEEPALIVE_CONTINUOUS_TIME_FAILED       3001058 //Failed to read the continuous time of keepalive
+#define OPT_ERR_READ_DELIVERY_TIMES_FAILED                  3001059 //Failed to read the delivery times of prop packet
+#define OPT_ERR_READ_INTERVAL_TIME_FAILED                   3001060 //Failed to read the interval time of prop packet
+#define OPT_ERR_READ_OUTPUTBOARD_VISION_FAILED              3001061 //Failed to read the vision of output board
+#define OPT_ERR_READ_DETECT_MODE_FAILED                     3001062 //Failed to read detect mode of load
+#define OPT_ERR_SET_BOOT_STATE_MODE_FAILED                  3001063 //Failed to set mode of boot state
+#define OPT_ERR_READ_MODEL_BOOT_MODE_FAILED                 3001064 //Failed to read the specified channel boot state
+#define OPT_ERR_SET_OUTERTRIGGERFREQUENCYUPPERBOUND_FAILED  3001065 //Failed to set outer trigger frequency upper bound
+#define OPT_ERR_SET_IPCONFIG_FAILED                         3001066 //Failed to set IP configuration of the controller
+#define OPT_ERR_SET_VOLTAGE_FAILED                          3001067 //Failed to set voltage of specified channel voltage
+#define OPT_ERR_READ_VOLTAGE_FAILED                         3001068 //Failed to read the specified channel's voltage
+#define OPT_ERR_SET_TIMEUNIT_FAILED                         3001069 //Failed to set time unit
+#define OPT_ERR_READ_TIMEUNIT_FAILED                        3001070 //Failed to read time unit
+#define OPT_ERR_FILEEXT                                     3001071 //File suffix name is wrong
+#define OPT_ERR_FILEPATH_EMPTY                              3001072 //File path is empty
+#define OPT_ERR_FILE_MAGIC_NUM                              3001073 //magic number is wrong
+#define OPT_ERR_FILE_CHECKSUM                               3001074 //Checksum is wrong
+#define OPT_ERR_SEQDATA_EQUAL                               3001075 //Current SEQ table data is different from load file data
+#define OPT_ERR_SET_HB_TIMEUNIT_FAILED                      3001076 //Failed to set highlight time unit
+#define OPT_ERR_READ_HB_TIMEUNIT_FAILED                     3001077 //Failed to read highlight time unit
+#define OPT_ERR_SET_TRIGGERDELAY_TIMEUNIT_FAILED            3001078 //Failed to set trigger delay time unit
+#define OPT_ERR_READ_TRIGGERDELAY_TIMEUNIT_FAILED           3001079 //Failed to read trigger delay time unit
+#define OPT_ERR_SET_PERCENT_FAILED                          3001080 //Failed to set percent of brightening current
+#define OPT_ERR_READ_PERCENT_FAILED                         3001081 //Failed to read percent of brightening current
+#define OPT_ERR_SET_HB_LIMIT_STATE_FAILED                   3001082 //Failed to set high light trigger output duty limit switch state
+#define OPT_ERR_READ_HB_LIMIT_STATE_FAILED                  3001083 //Failed to read high light trigger output duty limit switch state
+#define OPT_ERR_SET_HB_TRIGGER_OUTPUT_DUTY_RATIO_FAILED     3001084 //Failed to set high light trigger output duty limit ratio
+#define OPT_ERR_READ_HB_TRIGGER_OUTPUT_DUTY_RATIO_FAILED    3001085 //Failed to read high light trigger output duty limit ratio
+#define OPT_ERR_SET_DIFF_PRESURE_LIMIT_STATE_FAILED         3001086 //Failed to set differential pressure limit function switch status
+#define OPT_ERR_READ_DIFF_PRESURE_LIMIT_STATE_FAILED        3001087 //Failed to read differential pressure limit function switch status
+#define OPT_ERR_SET_START_ADDRESS_FAILED                    3001088 //Failed to set the specified channel's start address index
+#define OPT_ERR_SET_END_ADDRESS_FAILED                      3001089 //Failed to set the specified channel's end address index
+#define OPT_ERR_SET_HARDWARE_RESET_SWITCH_STATE_FAILED      3001090 //Failed to set the specified channel's hardware reset switch state
+#define OPT_ERR_SET_ADDRESS_SWITCH_STATE_FAILED             3001091 //Failed to set the specified channel's hardware reset switch state
+#define OPT_ERR_READ_PROGRAMMABLE_PARAM_FAILED              3001092 //Failed to read programmable parameters for the specified channel's
+#define OPT_ERR_SET_DBOARD_HANDLE_INTENSITY_RESULT_FAILED   3001093 //Fail to set D board whether handle intensity result
+#define OPT_ERR_READ_DBOARD_HANDLE_INTENSITY_RESULT_FAILED  3001094 //Fail to read D board whether handle intensity result
+#define OPT_ERR_SET_DO_CONTROL_SOURCE_FAILED                3001095 //Fail to set DO control source
+#define OPT_ERR_READ_DO_CONTROL_SOURCE_FAILD                3001096 //Fail to read DO control source
+#define OPT_ERR_SET_DO_CONTROL_MODE_FAILED                  3001097 //Fail to set DO control mode
+#define OPT_ERR_READ_DO_CONTROL_MODE_FAILD                  3001098 //Fail to read DO control mode
+#define OPT_ERR_SET_DO_POLARITY_FAILED                      3001099 //Fail to set DO polarity
+#define OPT_ERR_READ_DO_POLARITY_FAILD                      3001100 //Fail to read DO polarity
+#define OPT_ERR_SET_DO_STANDBY_LEVEL_FAILED                 3001101 //Fail to set DO standby level
+#define OPT_ERR_READ_DO_STANDBY_LEVEL_FAILED                3001102 //Fail to read DO standby level
+#define OPT_ERR_SET_DO_SOFTWARE_LEVEL_CONTROL_FAILED        3001103 //Fail to set DO software level control
+#define OPT_ERR_READ_DO_SOFTWARE_LEVEL_CONTROL_FAILED       3001104 //Fail to read DO software level control
+#define OPT_ERR_READ_DO_ACTUAL_OUTPUT_LEVEL_FAILED          3001105 //Fail to read DO actual output level
+#define OPT_ERR_SET_DO_DELAY_FAILED                         3001106 //Fail to set DO delay
+#define OPT_ERR_READ_DO_DELAY_FAILED                        3001107 //Fail to read DO delay
+#define OPT_ERR_SET_DO_DELAY_UNIT_FAILED                    3001108 //Fail to set DO delay unit
+#define OPT_ERR_READ_DO_DELAY_UNIT_FAILED                   3001109 //Fail to read DO delay unit
+#define OPT_ERR_SET_DO_TRIGGER_WIDTH_FAILED                 3001110 //Fail to set DO trigger width
+#define OPT_ERR_READ_DO_TRIGGER_WIDTH_FAILED                3001111 //Fail to read DO trigger width
+#define OPT_ERR_SET_DO_TRIGGER_WIDTH_UNIT_FAILED            3001112 //Fail to set DO trigger width unit
+#define OPT_ERR_READ_DO_TRIGGER_WIDTH_UNIT_FAILED           3001113 //Fail to read DO trigger width unit
+#define OPT_ERR_SET_USER_NAME_FAILED                        3001114 //Fail to set user name
+#define OPT_ERR_READ_USER_NAME_FAILED                       3001115 //Fail to Read user name
+
+#endif
