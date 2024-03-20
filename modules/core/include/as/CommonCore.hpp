@@ -16,7 +16,6 @@
 #include <unordered_map>
 
 #include "as/core/def.h"
-#include "as/ErrorCode.hpp"
 
 using std::cout;
 using std::endl;
@@ -66,49 +65,15 @@ namespace boost
 
 namespace as
 {
-	//AOI注册元件标准、生产的应用模式(检测模式)
-	enum class DefectMode
-	{
-		SMTMode = 1,        //SMT检测模式
-		WaveSolderMode = 2, //波峰焊检测模式
-		HGMode = 3,         //红胶检测模式
-		HASLMode = 4,       //喷锡板检测模式
-		FurnaceFront = 5,   //炉前检测模式
-	};
-
 	// 坐标系统方向
-	enum class CoordinateType
-	{
-		RIGHT_DOWN = 0,         // 右下方向
-		LEFT_DOWN = 1,				// 左下方向
-		RIGHT_UP = 2,				// 右上方向
-		LEFT_UP = 3				// 左上方向
-	};
+	//enum class CoordinateType
+	//{
+	//	RIGHT_DOWN = 0,         // 右下方向
+	//	LEFT_DOWN = 1,				// 左下方向
+	//	RIGHT_UP = 2,				// 右上方向
+	//	LEFT_UP = 3				// 左上方向
+	//};
 
-	enum class CoordinateSystem
-	{
-		MechanicalCoorSystem = 0,	//机械坐标系
-		PCBCoorSystem,				//标定坐标系
-		MountOriginCoorSystem,		//贴装原点坐标
-		BlockCoorSystem,			//块坐标系
-		ArrayCoorSystem				//拼板坐标系
-	};
-
-	//传送带站点
-	enum class Station
-	{
-		StationF1 = 0,       // 前轨道站1
-		StationF2,
-		StationF3,
-		size
-	};
-
-	//多轨道定义
-	enum class Orbit
-	{
-		Orbit_FRONT = 1,
-		Orbit_BEHIND,
-	};
 
 	class  AS_EXPORTS Point
 	{

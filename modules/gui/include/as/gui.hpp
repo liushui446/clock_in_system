@@ -6,6 +6,8 @@
 namespace as
 {
     AS_EXPORTS int GuiTest(int argc, char* argv[]);
+
+    AS_EXPORTS int RunGUI(int argc, char* argv[]);
 }
 
 #endif

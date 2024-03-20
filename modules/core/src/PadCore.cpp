@@ -2,116 +2,114 @@
 
 namespace as
 {
-	DetectionPadData::DetectionPadData()
+
+	User::User()
 	{
-		m_PadArea = 0;
+		username = "";
+		password = "";
+		userType = as::UserType::Student;
 	}
 
-	DetectionPadData& DetectionPadData::operator=(DetectionPadData& ref)
+	User& User::operator=(User& ref)
 	{
-		this->m_PadArea = ref.GetPadArea();
-		this->m_PadName = ref.GetPadName();
-		this->m_nBlockId = ref.GetBlockId();
-		this->m_nArrayId = ref.GetArrayId();
-		this->m_BodyPosition = ref.GetBodyPosition();
-		this->m_dBodyWidth = ref.GetBodyWidth();
-		this->m_dBodyHeight = ref.GetBodyHeight();
-		this->m_dAngle = ref.GetAngle();
-		this->m_bSkip = ref.GetSkip();
-		this->m_bCompleteDetection = ref.GetCompleteDetection();
+		this->username = ref.getUsername();
+		this->password = ref.getPassword();
+		this->userType = ref.getUserType();
 		return *this;
 	}
 
-	void DetectionPadData::SetPadName(string name)
+	string User::getUsername()
 	{
-		m_PadName = name;
+		return username;
+	}
+	void User::setUsername(string name)
+	{
+		username = name;
 	}
 
-	string DetectionPadData::GetPadName()
+	string User::getPassword()
 	{
-		return m_PadName;
+		return password;
+	}
+	void User::setPassword(string pwd)
+	{
+		password = pwd;
 	}
 
-	void DetectionPadData::SetPadArea(double area)
+	UserType User::getUserType()
 	{
-		m_PadArea = area;
+		return userType;
+	}
+	void User::setUserType(UserType type)
+	{
+		userType = type;
 	}
 
-	double DetectionPadData::GetPadArea()
+	UserManage::UserManage()
 	{
-		return m_PadArea;
 	}
 
-	PadDataSet::PadDataSet()
+	map<string, map<string, User>>& UserManage::GetuserDataRes()
 	{
-		m_pDetectionPadDataSet.clear();
+		return userDatabase;
 	}
 
-	map<string, shared_ptr<DetectionPadData>> PadDataSet::GetAllPadData()
+	bool UserManage::FindUserType(string type)
 	{
-		return m_pDetectionPadDataSet;
-	}
-
-	shared_ptr<DetectionPadData> PadDataSet::GetSinglePadData(string name)
-	{
-		if (m_pDetectionPadDataSet.find(name) != m_pDetectionPadDataSet.end())
-		{
-			return m_pDetectionPadDataSet.find(name)->second;
-		}
-		else
-		{
-			return nullptr;
-		}
-	}
-
-	bool PadDataSet::FindSinglePadData(string name)
-	{
-		if (m_pDetectionPadDataSet.find(name) != m_pDetectionPadDataSet.end())
+		if (userDatabase.find(type) != userDatabase.end())
 		{
 			return true;
 		}
 		return false;
 	}
 
-	void PadDataSet::InsertSinglePadData(string name, shared_ptr<DetectionPadData> padData)
+	bool UserManage::FindUsername(string type, string name)
 	{
-		if (m_pDetectionPadDataSet.find(name) == m_pDetectionPadDataSet.end())
+		if (FindUserType(type))
 		{
-			m_pDetectionPadDataSet.insert(pair<string, shared_ptr<DetectionPadData>>(name, padData));
+			if (userDatabase.at(type).find(name) != userDatabase.at(type).end())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	map<string, User>& UserManage::GetUserTypeParam(string type)
+	{
+		if (FindUserType(type))
+		{
+			return userDatabase.at(type);
+		}
+		return map<string, User>();
+	}
+
+	User& UserManage::GetUserParam(string type, string name)
+	{
+		if (FindUsername(type, name))
+		{
+			return userDatabase.at(type).at(name);
+		}
+		return User();
+	}
+
+	void UserManage::InsertUserParam(string type, string name, User param)
+	{
+		if (FindUserType(type))
+		{
+			if (!FindUsername(type, name))
+			{
+				userDatabase.at(type).insert(pair<string, User>(name, param));
+			}
+		}
+		else
+		{
+			map<string, User> tmp_data;
+			tmp_data.insert(pair<string, User>(name, param));
+			userDatabase.insert(pair<string, map<string, User>>(type, tmp_data));
 		}
 	}
 
-	void PadDataSet::DeleteSinglePadData(string name)
-	{
-		if (m_pDetectionPadDataSet.find(name) != m_pDetectionPadDataSet.end())
-		{
-			m_pDetectionPadDataSet.erase(m_pDetectionPadDataSet.find(name));
-		}
-	}
-	shared_ptr<PadGroupManager> PadDataSet::GetPadGroupManager()
-	{
-		return m_pPadGroupManager;
-	}
 
-	PadGroupManager::PadGroupManager()
-	{
-		m_pPadShapeGroupMger.clear();
-		m_pPadCustomizeGroupMger.clear();
-	}
-	map<PadGroupManager::PadShape, PadGroupManager::PadShapeGroup> PadGroupManager::GetAllPadShapeGroup()
-	{
-		return m_pPadShapeGroupMger;
-	}
 
-	PadGroupManager& PadGroupManager::operator=(PadGroupManager& ref)
-	{
-		this->m_pPadCustomizeGroupMger = ref.GetAllCustomizeGroup();
-		this->m_pPadShapeGroupMger = ref.GetAllPadShapeGroup();
-		return *this;
-	}
-
-	map<string, PadGroupManager::PadCustomizeGroup> PadGroupManager::GetAllCustomizeGroup()
-	{
-		return m_pPadCustomizeGroupMger;
-	}
 }

@@ -31,5 +31,7 @@ void MainTest(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
     MainTest(argc, argv);
+
+    as::RunGUI(argc, argv);
     return 0;
 }

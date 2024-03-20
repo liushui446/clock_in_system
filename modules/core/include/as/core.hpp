@@ -3,7 +3,6 @@
 
 #include "as/core/def.h"
 #include "as/core/base.hpp"
-#include "as/core/ngdef.hpp"
 
 namespace as
 {
