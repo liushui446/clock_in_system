@@ -45,16 +45,21 @@ namespace as
 		userType = type;
 	}
 
+	string User::MD5Convert(string origin_password)
+	{
+		return MD5().encode(origin_password);
+	}
+
 	UserManage::UserManage()
 	{
 	}
 
-	map<string, map<string, User>>& UserManage::GetuserDataRes()
+	map<UserType, map<string, User>>& UserManage::GetuserDataRes()
 	{
 		return userDatabase;
 	}
 
-	bool UserManage::FindUserType(string type)
+	bool UserManage::FindUserType(UserType type)
 	{
 		if (userDatabase.find(type) != userDatabase.end())
 		{
@@ -63,7 +68,7 @@ namespace as
 		return false;
 	}
 
-	bool UserManage::FindUsername(string type, string name)
+	bool UserManage::FindUsername(UserType type, string name)
 	{
 		if (FindUserType(type))
 		{
@@ -75,7 +80,7 @@ namespace as
 		return false;
 	}
 
-	map<string, User>& UserManage::GetUserTypeParam(string type)
+	map<string, User>& UserManage::GetUserTypeParam(UserType type)
 	{
 		if (FindUserType(type))
 		{
@@ -84,16 +89,15 @@ namespace as
 		return map<string, User>();
 	}
 
-	User& UserManage::GetUserParam(string type, string name)
+	User UserManage::GetUserParam(UserType type, string name)
 	{
 		if (FindUsername(type, name))
 		{
 			return userDatabase.at(type).at(name);
 		}
-		return User();
 	}
 
-	void UserManage::InsertUserParam(string type, string name, User param)
+	void UserManage::InsertUserParam(UserType type, string name, User param)
 	{
 		if (FindUserType(type))
 		{
@@ -106,7 +110,7 @@ namespace as
 		{
 			map<string, User> tmp_data;
 			tmp_data.insert(pair<string, User>(name, param));
-			userDatabase.insert(pair<string, map<string, User>>(type, tmp_data));
+			userDatabase.insert(pair<UserType, map<string, User>>(type, tmp_data));
 		}
 	}
 

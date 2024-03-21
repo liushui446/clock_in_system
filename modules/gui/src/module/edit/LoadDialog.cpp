@@ -5,13 +5,14 @@
 #include <QFuture>
 #include <Qtimer>
 #include <QStandardItemModel>
+#include <QtWidgets>
 
 
 //#include "signal_transmitter.h"
 //#include "as/IniPara.hpp"
 
 LoadDialog::LoadDialog(QWidget *parent)
-    : ASQDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint), 
+    : ASQDialog(parent),
 	m_ui(new Ui::LoadDialog)
 {
 	m_ui->setupUi(this);
@@ -27,33 +28,25 @@ LoadDialog::~LoadDialog()
 
 void LoadDialog::InitUI()
 {
+
+    m_eSelectMode = UserType::Teacher;
     //================块拼初始化===============//
 
+    // 创建一个 QLabel 用于显示背景图
+    QLabel* backgroundLabel = new QLabel();
+    QImage Image;
+    Image.load(QString::fromLocal8Bit("res/bg/bg_sign_in.png"));
+    QPixmap pixmap = QPixmap::fromImage(Image);
+    QPixmap fitpixmap = pixmap.scaled(m_ui->widget_1->width(), m_ui->widget_1->height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    backgroundLabel->setPixmap(fitpixmap);
+    backgroundLabel->setAlignment(Qt::AlignCenter);
+    QHBoxLayout* layout = new QHBoxLayout();
+    layout->addWidget(backgroundLabel, 0, Qt::AlignCenter);	//居中
+    layout->setMargin(0);							//左右间距
+    m_ui->widget_1->setLayout(layout);
+
     ////外光内光数值初始化
-    //m_ui->label_10->setText(QString::number(0));
-    //m_ui->label_26->setText(QString::number(0));
 
-    ////旋转角度初始化
-    //m_ui->comboBox_Rotate->addItem(QString::number(0));
-    //m_ui->comboBox_Rotate->addItem(QString::number(90));
-    //m_ui->comboBox_Rotate->addItem(QString::number(180));
-    //m_ui->comboBox_Rotate->addItem(QString::number(270));
-    //m_ui->comboBox_Rotate->setCurrentIndex(0);
-
-    ////================按钮初始化设置===============//
-    ////确认按钮图标设置
-    //m_ui->toolButton_ok->setIconSize(QSize(32, 32));
-    //m_ui->toolButton_ok->setIcon(QIcon("res/button/checkall.svg"));
-    //m_ui->toolButton_ok->setText(QString::fromLocal8Bit("更新"));
-    //m_ui->toolButton_ok->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
-    ////===================Mark点形状====================//
-    //m_ui->comboBox_Shape->addItems(MarkTypeList);
-
-    ////=============== MARK点类型 ==================//
-    //m_ui->comboBox_positioningType->addItem(QIcon(QString::fromLocal8Bit("res/dialog/Board/位置类型1.png")), "");
-    //m_ui->comboBox_positioningType->addItem(QIcon(QString::fromLocal8Bit("res/dialog/Board/位置类型2.png")), "");
-    //m_ui->comboBox_positioningType->addItem(QIcon(QString::fromLocal8Bit("res/dialog/Board/位置类型3.png")), "");
 
 }
 
@@ -62,36 +55,48 @@ void LoadDialog::InitConnect()
     // ==== 位置类型 下拉选择 更新标记位置 ====
     
 
-        ////==== 块选择 刷新界面 ====
-        //connect(m_ui->comboBox_Block, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index)
-        //    {
-        //        as::OperateLogfunc::GetInstance().InfoComRecord("块选择", m_ui->comboBox_Block->currentText().toLocal8Bit().data(), __LINE__);
-        //    });
+    connect(m_ui->radioButton_1, static_cast<void (QRadioButton::*)(bool)>(&QRadioButton::toggled), this, [this](bool checked)
+        {
+            if (checked)
+            {
+                m_eSelectMode = as::UserType::Teacher;
+            }
+        });
+
+    connect(m_ui->radioButton_2, static_cast<void (QRadioButton::*)(bool)>(&QRadioButton::toggled), this, [this](bool checked)
+        {
+            if (checked)
+            {
+                m_eSelectMode = as::UserType::Student;
+            }
+        });
 
 
-        ////临界值
-        //connect(m_ui->lineEdit_CriticalValue, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
-        //    {
-        //        as::OperateLogfunc::GetInstance().InfoDataChangeRecord("临界值", m_ui->lineEdit_CriticalValue->text().toDouble(), __LINE__);
-        //        int val = m_ui->lineEdit_CriticalValue->text().toDouble();
-        //        //m_cBenchMarkProcess.
-        //    });
+        connect(m_ui->lineEdit_CriticalValue, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
+            {
+                string val = m_ui->lineEdit_CriticalValue->text().toLocal8Bit();
+                //m_cBenchMarkProcess.
+            });
 
-        ////自动
-        //connect(m_ui->checkBox_auto, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), this, [this](int value)
-        //    {
-        //        as::OperateLogfunc::GetInstance().InfoClickRecord(m_ui->checkBox_auto->text().toLocal8Bit().data(), __LINE__);
-        //        int val = value;
 
-        //    });
+        connect(m_ui->lineEdit_Position, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
+            {
+                string val = m_ui->lineEdit_Position->text().toLocal8Bit();
 
-        ////位置
-        //connect(m_ui->lineEdit_Position, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
-        //    {
-        //        as::OperateLogfunc::GetInstance().InfoDataChangeRecord("位置", m_ui->lineEdit_Position->text().toDouble(), __LINE__);
-        //        int val = m_ui->lineEdit_Position->text().toDouble();
+            });
 
-        //    });
 
+        connect(m_ui->checkBox, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), this, [this](bool checked)
+            {
+                bool val = checked;
+
+            });
+
+        connect(m_ui->toolButton_get_2, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
+            {
+                Q_UNUSED(checked);
+
+
+            });
 }
 

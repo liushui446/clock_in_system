@@ -34,6 +34,7 @@ private slots:
 private:
     Ui::LoadDialog *m_ui;
 	//BenchMarkProcess m_cBenchMarkProcess;
+	as::UserType m_eSelectMode;
 
 	as::CommonCheck statecheck;
 

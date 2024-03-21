@@ -20,12 +20,11 @@
 #include "as/gui.hpp"
 #include "as/io.hpp"
 
+
 namespace
 {
     bool InitParam()
     {
-
-
         return true;
     }
 
@@ -67,6 +66,10 @@ namespace as
         }
 
         LoadDialog appTest;
+        appTest.setWindowTitle("Sign in");
+        // 设置窗口标志，包括 Window 和 WindowCloseButtonHint
+        appTest.setWindowFlags(appTest.windowFlags() | Qt::Window | Qt::WindowCloseButtonHint);
+
         appTest.show();
 
         return app.exec();
