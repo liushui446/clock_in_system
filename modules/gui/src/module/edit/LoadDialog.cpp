@@ -95,7 +95,20 @@ void LoadDialog::InitConnect()
         connect(m_ui->toolButton_get_2, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
             {
                 Q_UNUSED(checked);
-
+                string name = m_ui->lineEdit_CriticalValue->text().toStdString();
+                string pwd = m_ui->lineEdit_Position->text().toStdString();
+                if (name == "")
+                {
+                    OperationCheckDialog tip_dialog(as::WidgetType::Tip, QString::fromLocal8Bit("用户名不能为空！"), 1, this);
+                    tip_dialog.exec();
+                }
+                else if (pwd == "")
+                {
+                    OperationCheckDialog tip_dialog(as::WidgetType::Tip, QString::fromLocal8Bit("密码不能为空！"), 1, this);
+                    tip_dialog.exec();
+                }
+                
+                
 
             });
 }

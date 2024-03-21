@@ -1,10 +1,11 @@
-//#include "as/edit/BenchmarkProcess.hpp"
+#include "as/edit/LoadDialogProcess.hpp"
 
 namespace as
 {
-	/*BenchMarkProcess::BenchMarkProcess()
+	LoadDialogProcess::LoadDialogProcess()
 	{
-		m_pBaseboard_data = *ASContext::GetInstance().GetBaseBoard();
-	}*/
+		m_pUserManagedata = *ASContext::GetInstance().GetUserManagedata();
+	}
+
 
 }
