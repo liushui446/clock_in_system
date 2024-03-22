@@ -12,7 +12,7 @@ namespace as
 		virtual void GetItem() = 0;
 		virtual bool UpdateItem() = 0;
 		virtual void DeleteItem() = 0;
-		virtual void AddItem() = 0;
+		virtual void AddItem(vector<User> data) = 0;
 		/*virtual void GetAuthorityItem() = 0;
 		virtual void GetDefAuthority() = 0;*/
 		//virtual bool UpdateAuthorityItem(std::map<std::pair<as::LevelCore::OperationMode, WindowsType>, std::string> authority) = 0;

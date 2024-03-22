@@ -1,29 +1,30 @@
-﻿#ifndef AS_LoadDIALOG_H
-#define AS_LoadDIALOG_H
+﻿#ifndef AS_TAKELEAVEDIALOG_H
+#define AS_TAKELEAVEDIALOG_H
 
 #include "common/CommonPart.h"
 #include "as/CommonCore.hpp"
 #include "as/common/UiCallback.h"
 
-//process
+#include "SubmitDialog.h"
+
+//
 #include "as/common/CommonProcess.h"
-#include "as/edit/LoadDialogProcess.hpp"
 
 //Qt
 #include <QLineEdit>
 
 namespace Ui
 {
-	class LoadDialog;
+	class TakeLeaveDialog;
 }
 using namespace as;
 
-class LoadDialog : public ASQDialog
+class TakeLeaveDialog : public ASQDialog
 {
     Q_OBJECT
 public:
-	LoadDialog(QWidget* parent = nullptr);
-	~LoadDialog();
+	TakeLeaveDialog(QWidget* parent = nullptr);
+	~TakeLeaveDialog();
 
 	void InitUI();
 	
@@ -34,12 +35,10 @@ signals:
 private slots:
 
 private:
-    Ui::LoadDialog *m_ui;
+    Ui::TakeLeaveDialog *m_ui;
+
+	SubmitDialog* m_cSubmitDialog;
 	
-	LoadDialogProcess m_LoadDialogProcess;
-
-	as::UserType m_eSelectMode;
-
 
 };
 

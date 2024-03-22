@@ -19,16 +19,7 @@ namespace as
 
 	CommonProcess::CommonProcess()
 	{
-		m_strProgramName = "无标题";
-
-		//判断文件夹是否存在、不存在则创建
-		/*m_strDataSavePath = GetCurrentProgeramPath() + "\\AOIData\\";
-		if (_access(m_strDataSavePath.c_str(), 0) == -1)
-			_mkdir(m_strDataSavePath.c_str());
-
-		m_strDataSavePath += m_strProgramName;
-		if (_access(m_strDataSavePath.c_str(), 0) == -1)
-			_mkdir(m_strDataSavePath.c_str());*/
+		
 	}
 
 	CommonProcess& CommonProcess::GetInstance()
@@ -60,6 +51,16 @@ namespace as
 			return unit - 10 + 'A';
 
 		return '0';
+	}
+
+	void CommonProcess::SetSignName(string data)
+	{
+		m_strUserName = data;
+	}
+
+	string CommonProcess::GetSignName()
+	{
+		return m_strUserName;
 	}
 
 	string CommonProcess::string_To_UTF8(const string& str)
@@ -190,57 +191,4 @@ namespace as
 		return true;
 	}
 
-	bool CommonCheck::StateMachineCheck(bool moveaction)
-	{
-		//StateID state = StateMachineCore::GetInstance().GetStateID();
-		//if (moveaction)
-		//{
-		//	if (state == StateID::StateID_Idle_0)
-		//	{
-		//		//as::CommonProcess::GetInstance().SoftSendQMessage(MsgLevel::WARNING, SoftErrCode::UnReady);
-		//		return false;
-		//	}
-		//	else if (state == StateID::StateID_Idle_1)
-		//	{
-		//		//as::CommonProcess::GetInstance().SendQMessage(as::MsgLevel::WARNING, as::WorkInErrState);
-		//		return false;
-		//	}
-		//	else if (state == StateID::StateID_Wait)
-		//	{
-		//		return true;
-		//	}
-		//	else if (state == StateID::StateID_Idle_2)
-		//	{
-		//		return true;
-		//	}
-		//	else
-		//	{	
-		//		//as::CommonProcess::GetInstance().SendQMessage(as::MsgLevel::WARNING, as::WorkInErrState);
-		//		return false;
-		//	}
-		//}
-		//else
-		//{
-		//	if (state == StateID::StateID_Idle_0)
-		//	{
-		//		//as::CommonProcess::GetInstance().SoftSendQMessage(MsgLevel::WARNING, SoftErrCode::UnReady);
-		//		return false;
-		//	}
-		//	else if (state == StateID::StateID_Idle_1)
-		//	{
-		//		//as::CommonProcess::GetInstance().SendQMessage(as::MsgLevel::WARNING, as::WorkInErrState);
-		//		return false;
-		//	}
-		//	else if (state == StateID::StateID_Idle_2)
-		//	{
-		//		return true;
-		//	}
-		//	else
-		//	{
-		//		//as::CommonProcess::GetInstance().SendQMessage(as::MsgLevel::WARNING, as::WorkInErrState);
-		//		return false;
-		//	}
-		//}
-		return true;
-	}
 }

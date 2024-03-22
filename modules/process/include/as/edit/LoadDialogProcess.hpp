@@ -13,9 +13,19 @@ namespace as
 	public:
 		LoadDialogProcess::LoadDialogProcess();
 
+		void SetUsername(string name);
+		void SetUserpwd(string pwd);
+		void SetUsertype(UserType type);
+
+		bool identifyUsername(string val);
+		bool identifyUserpwd(string val);
+
 		
 	private:
 		UserManage m_pUserManagedata;
+		string m_curSignname;
+		string m_pwd;
+		UserType m_type;
 	};
 }
 

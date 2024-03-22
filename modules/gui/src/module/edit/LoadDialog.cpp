@@ -28,10 +28,8 @@ LoadDialog::~LoadDialog()
 
 void LoadDialog::InitUI()
 {
-
     m_eSelectMode = UserType::Teacher;
-    //================块拼初始化===============//
-
+    m_LoadDialogProcess.SetUsertype(m_eSelectMode);
     // 创建一个 QLabel 用于显示背景图
     QLabel* backgroundLabel = new QLabel();
     QImage Image;
@@ -45,7 +43,7 @@ void LoadDialog::InitUI()
     layout->setMargin(0);							//左右间距
     m_ui->widget_1->setLayout(layout);
 
-    ////外光内光数值初始化
+   
 
 
 }
@@ -60,6 +58,7 @@ void LoadDialog::InitConnect()
             if (checked)
             {
                 m_eSelectMode = as::UserType::Teacher;
+                m_LoadDialogProcess.SetUsertype(m_eSelectMode);
             }
         });
 
@@ -68,6 +67,7 @@ void LoadDialog::InitConnect()
             if (checked)
             {
                 m_eSelectMode = as::UserType::Student;
+                m_LoadDialogProcess.SetUsertype(m_eSelectMode);
             }
         });
 
@@ -75,14 +75,14 @@ void LoadDialog::InitConnect()
         connect(m_ui->lineEdit_CriticalValue, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
             {
                 string val = m_ui->lineEdit_CriticalValue->text().toLocal8Bit();
-                //m_cBenchMarkProcess.
+                //m_LoadDialogProcess.SetUsername(val);
             });
 
 
         connect(m_ui->lineEdit_Position, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
             {
                 string val = m_ui->lineEdit_Position->text().toLocal8Bit();
-
+                //m_LoadDialogProcess.SetUserpwd(val);
             });
 
 
@@ -101,15 +101,25 @@ void LoadDialog::InitConnect()
                 {
                     OperationCheckDialog tip_dialog(as::WidgetType::Tip, QString::fromLocal8Bit("用户名不能为空！"), 1, this);
                     tip_dialog.exec();
+                    return;
                 }
                 else if (pwd == "")
                 {
                     OperationCheckDialog tip_dialog(as::WidgetType::Tip, QString::fromLocal8Bit("密码不能为空！"), 1, this);
                     tip_dialog.exec();
+                    return;
                 }
-                
-                
-
+                if (m_LoadDialogProcess.identifyUsername(name))
+                {
+                    if (m_LoadDialogProcess.identifyUserpwd(pwd))
+                    {
+                        this->accept();
+                        return;
+                    }
+                }
+                OperationCheckDialog tip_dialog(as::WidgetType::Tip, QString::fromLocal8Bit("密码错误,请重试！"), 1, this);
+                tip_dialog.exec();
+                return;
             });
 }
 

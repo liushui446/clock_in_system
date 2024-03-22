@@ -2,6 +2,7 @@
 #define AS_DB_MGR_HPP
 
 #include "as/Common/CommonProcess.h"
+#include "as/ASContext.hpp"
 
 namespace as 
 {
@@ -18,6 +19,8 @@ namespace as
 		//bool UpdateAuthority(std::map<std::pair<as::LevelCore::OperationMode, WindowsType>, std::string> authority);
 
 		bool UpdateUserPassword();
+
+		bool CreateUserPassword(vector<User> data);
 
 	};
 }

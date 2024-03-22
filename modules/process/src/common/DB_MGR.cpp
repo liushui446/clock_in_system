@@ -51,6 +51,22 @@ namespace as
 			return nullptr;
 		}
 	}
+
+	bool DB_MGR::CreateUserPassword(vector<User> data)
+	{
+		try
+		{
+			as::DataBasePath::GetDataBasePath();
+			as::UserDBUtils::Getinstance().getConnection();
+			shared_ptr<as::UserDAO> Userlite(new as::UserImpl());
+			Userlite->AddItem(data);
+			return true;
+		}
+		catch (...)
+		{
+			return false;
+		}
+	}
 	
 	/*bool DB_MGR::UpdateAuthority(std::map<std::pair<as::LevelCore::OperationMode, WindowsType>, std::string> authority)
 	{

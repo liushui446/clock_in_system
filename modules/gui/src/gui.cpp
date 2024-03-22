@@ -56,21 +56,22 @@ namespace as
     {
 #if 1
         QApplication app(argc, argv);
-
-		//MainWindow mainwindow;
-		//mainwindow.show();
-
+		
         if (!InitParam())
         {
             // todo: 返回错误或是弹框
         }
 
+        MainWindow mainwindow;
         LoadDialog appTest;
-        appTest.setWindowTitle("Sign in");
-        // 设置窗口标志，包括 Window 和 WindowCloseButtonHint
-        appTest.setWindowFlags(appTest.windowFlags() | Qt::Window | Qt::WindowCloseButtonHint);
+        appTest.setWindowTitle(QString::fromLocal8Bit("请假系统"));
+        //// 设置窗口标志，包括 Window 和 WindowCloseButtonHint
+        //appTest.setWindowFlags(appTest.windowFlags() | Qt::WindowCloseButtonHint);
 
-        appTest.show();
+        if (appTest.exec() == QDialog::Accepted)
+        {
+            mainwindow.show();
+        }
 
         return app.exec();
 #else

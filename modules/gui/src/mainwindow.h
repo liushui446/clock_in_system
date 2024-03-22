@@ -1,6 +1,10 @@
 #ifndef AS_MAINWINDOW_H
 #define AS_MAINWINDOW_H
 
+#include "HomePageDialog.h"
+#include "TakeLeaveDialog.h"
+#include "SubmitDialog.h"
+
 //QT
 #include <QLabel>
 #include <QMutex>
@@ -13,13 +17,7 @@
 namespace Ui {
     class MainWindow;
 }
-namespace items
-{
-    class VisGraphicsScene;
-    class VisGraphicsView;
-    class ThumbnailGraphicsScene;
-    class ThumbnailGraphicsView;
-}
+
 // Qt
 class QTimer;
 
@@ -31,9 +29,19 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
     virtual ~MainWindow();
 
+    void iniUI();
+    void iniConnect();
+
     Ui::MainWindow* m_ui;
 private:
+    HomePageDialog* m_cHomePageDialog;
+    TakeLeaveDialog* m_cTakeLeaveDialog;
+    SubmitDialog* m_cSubmitDialog;
 
+
+    DialogType m_CurDialogType;
+    QMenuBar* menuBar;
+    QMenu* fileMenu;
 };
 
 #endif

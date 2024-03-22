@@ -65,14 +65,13 @@ namespace boost
 
 namespace as
 {
-	// 坐标系统方向
-	//enum class CoordinateType
-	//{
-	//	RIGHT_DOWN = 0,         // 右下方向
-	//	LEFT_DOWN = 1,				// 左下方向
-	//	RIGHT_UP = 2,				// 右上方向
-	//	LEFT_UP = 3				// 左上方向
-	//};
+
+	enum class DialogType
+	{
+		Home_Page = 0,         
+		Take_Leave = 1,			
+		Submit = 2						
+	};
 
 
 	class  AS_EXPORTS Point

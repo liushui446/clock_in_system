@@ -14,7 +14,7 @@ namespace as
 		void GetItem();
 		bool UpdateItem();
 		void DeleteItem();
-		void AddItem();
+		void AddItem(vector<User> data);
 		/*void GetAuthorityItem();
 		void GetDefAuthority();*/
 		//bool UpdateAuthorityItem(std::map<std::pair<as::LevelCore::OperationMode, WindowsType>, std::string> authority);

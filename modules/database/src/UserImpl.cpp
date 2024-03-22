@@ -27,27 +27,29 @@ namespace as
 		}
 		catch (...)
 		{
+			as::UserDBUtils::Getinstance().free();
 			throw nullptr;
 		}
 
-		int index = nColumn-1;
+		int index = 0;
 		ASContext* level = &ASContext::GetInstance();
 		for (int row = 0; row < nRow; row++)
 		{
+			index = (row + 1) * nColumn;
 			User tmp_user;
-			if (dbResult[index] == "Teacher")
+			if (string(dbResult[index+1]) == "Teacher")
 			{
 				tmp_user.setUserType(UserType::Teacher);
-				tmp_user.setUsername(dbResult[index - 1]);
-				tmp_user.setPassword(dbResult[index + 1]);
-				level->GetUserManagedata()->InsertUserParam(tmp_user.getUserType(), dbResult[index - 1], tmp_user);
+				tmp_user.setUsername(string(dbResult[index]));
+				tmp_user.setPassword(string(dbResult[index + 2]));
+				level->GetUserManagedata()->InsertUserParam(tmp_user.getUserType(), string(dbResult[index]), tmp_user);
 			}
-			else if (dbResult[index] == "Student")
+			else if (string(dbResult[index+1]) == "Student")
 			{
 				tmp_user.setUserType(UserType::Student);
-				tmp_user.setUsername(dbResult[index - 1]);
-				tmp_user.setPassword(dbResult[index + 1]);
-				level->GetUserManagedata()->InsertUserParam(tmp_user.getUserType(), dbResult[index - 1], tmp_user);
+				tmp_user.setUsername(string(dbResult[index]));
+				tmp_user.setPassword(string(dbResult[index + 2]));
+				level->GetUserManagedata()->InsertUserParam(tmp_user.getUserType(), string(dbResult[index]), tmp_user);
 			}
 		}
 		sqlite3_free_table(dbResult);
@@ -95,6 +97,7 @@ namespace as
 		}
 		catch (...)
 		{
+			as::UserDBUtils::Getinstance().free();
 			return false;
 		}
 		
@@ -107,9 +110,38 @@ namespace as
 
 	}
 
-	void UserImpl::AddItem()
+	void UserImpl::AddItem(vector<User> data)
 	{
+		char* cErrMsg = NULL;
+		string sql;
+		string type;
+		int res = SQLITE_OK;
 
+		try
+		{
+			for (auto &val : data)
+			{
+				if (val.getUserType() == UserType::Teacher)
+					type = "Teacher";
+				else
+					type = "Student";
+				
+				sql = fmt::format("insert into UserPassword (USER_Name, USER_TYPE, USER_PASSWORD) values('{}','{}','{}');", \
+					val.getUsername(), type, val.getPassword());
+				int res = sqlite3_exec(UserDBUtils::Getinstance().getsqlite(), sql.c_str(), 0, 0, &cErrMsg);
+				if (res != SQLITE_OK) {
+					std::cout << val.getUsername() << "--" << "User Create Fail" << (cErrMsg ? cErrMsg : "0 count") << endl;
+					UserDBUtils::Getinstance().free();
+					return;
+				}
+			}
+		}
+		catch (...)
+		{
+			as::UserDBUtils::Getinstance().free();
+			return;
+		}
+		as::UserDBUtils::Getinstance().free();
 	}
 
 }

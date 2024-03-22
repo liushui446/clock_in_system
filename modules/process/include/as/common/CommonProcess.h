@@ -31,24 +31,16 @@ namespace as
 		string intToHex(int n);
 		char hexUnit(unsigned char unit);
 
+		void SetSignName(string data);
+		string GetSignName();
 
 	private:
 		mutex mtx;
 		std::function<void(int)> m_GUIFunc;
-		std::function<void(int block_id, int array_id, int index, bool ref_flag)> m_RefCompListFunc;
-		std::function<void(std::string, std::string, int error_code)> m_MessageBoardFunc;
-		string m_strProgramName; //项目名称
+		string m_strUserName;
 		string m_strDataSavePath;//数据保存路径
 	};
 
-	
-
-	// 共有检查类
-	class AS_EXPORTS CommonCheck
-	{
-	public:
-		static bool StateMachineCheck(bool moveaction);  // true：Move动作，false：Get动作
-	};
 }
 
 #endif
