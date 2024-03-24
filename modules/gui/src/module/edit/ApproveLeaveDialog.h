@@ -45,6 +45,8 @@ private:
 	SubmitDialog* m_cSubmitDialog;
 	
 	MainWindow* m_cmain;
+
+	string m_cur_selname;
 };
 
 #endif

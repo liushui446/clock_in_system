@@ -69,8 +69,9 @@ namespace as
 	enum class DialogType
 	{
 		Home_Page = 0,         
-		Take_Leave = 1,			
-		Submit = 2						
+		Take_Leave = 1,	
+		Approval = 2,
+		Authority = 3					
 	};
 
 	enum class leaveStatus

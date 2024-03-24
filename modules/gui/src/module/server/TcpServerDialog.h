@@ -35,7 +35,10 @@ public:
 	
 	void hasConnect();
 	void handleSendOutData(const sendStruct& data);
+	void handleSendOutData();
 	void handleGetRecieveData();
+	void DataToMess(UserLeaveMessageData data, UserLeaveMessage& mess);
+	void MessToData(UserLeaveMessage data, UserLeaveMessageData& mess);
 signals:
 
 private slots:
@@ -57,6 +60,10 @@ private:
 
 	bool m_isGetPartData;
 	int m_requestDataSize;
+
+	// 添加一个成员变量，用于存储客户端套接字指针及其标识信息
+	map<string, QTcpSocket*> m_clientSockets;
+	vector<QTcpSocket*> m_tcpclientlist;
 };
 
 #endif

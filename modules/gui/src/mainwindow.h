@@ -16,6 +16,8 @@
 #include <QMenuBar>
 
 #include "qtcpsocket.h"
+#include "src/module/common/CustomDataStreamOperators.h"
+//#include "common/CommonPart.h"
 
 namespace Ui {
     class MainWindow;
@@ -45,9 +47,16 @@ public:
 
     void ShowUserNa();
 
-    void handleSendOutData(const sendStruct& data);
+    //void handleSendOutData(const sendStruct& data);
+    void handleSendOutData(UserLeaveMessageData& data, string des);
+
+    void handleSendOutData();
 
     void handleGetRecieveData();
+
+    void DataToMess(UserLeaveMessageData data, UserLeaveMessage& mess);
+
+    void MessToData(UserLeaveMessage data, UserLeaveMessageData& mess);
 
     Ui::MainWindow* m_ui;
 private:

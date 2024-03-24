@@ -6,22 +6,23 @@ namespace as
 {
 	class User;
 	class MD5;
-	struct UserLeaveMessageData;
+	struct UserLeaveMessage;
 }
 
 namespace as
 {
-	struct UserLeaveMessageData
+	struct UserLeaveMessage
 	{
-		string m_username;
-		int m_type;  //(0:ÊÂ¼Ù 1:²¡¼Ù)
-		string m_datetime;
-		string m_reason;
-		leaveStatus m_status;
-		string m_adress;
 
-		UserLeaveMessageData()
-			: m_status(leaveStatus::Approvaling)
+		std::string m_username;
+		int m_type;  //(0:ÊÂ¼Ù 1:²¡¼Ù)
+		std::string m_datetime;
+		std::string m_reason;
+		as::leaveStatus m_status;
+		std::string m_adress;
+
+		UserLeaveMessage()
+			: m_status(as::leaveStatus::Approvaling)
 		{
 			m_username = "";
 			m_type = 0;
@@ -30,7 +31,7 @@ namespace as
 			m_adress = "";
 		}
 
-		UserLeaveMessageData& operator=(UserLeaveMessageData& ref)
+		UserLeaveMessage& operator=(UserLeaveMessage& ref)
 		{
 			this->m_username = ref.m_username;
 			this->m_type = ref.m_type;
@@ -41,6 +42,7 @@ namespace as
 			return *this;
 		}
 	};
+
 
 	class MD5
 	{
@@ -201,6 +203,7 @@ namespace as
 
 	class AS_EXPORTS User
 	{
+
 	public:
 		User();
 
@@ -236,11 +239,11 @@ namespace as
 		//void InsertUserTypeParam(string name, User param);
 		void InsertUserParam(UserType type, string name, User param);
 
-		vector<UserLeaveMessageData>& GetLeavemess();
-		void InsertLeavemess(vector<UserLeaveMessageData> vec);
+		vector<UserLeaveMessage>& GetLeavemess();
+		void InsertLeavemess(vector<UserLeaveMessage> vec);
 	private:
 		map<UserType, map<string, User>> userDatabase;
-		vector<UserLeaveMessageData> m_vleavemess;
+		vector<UserLeaveMessage> m_vleavemess;
 	};
 }
 

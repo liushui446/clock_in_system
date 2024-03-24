@@ -30,7 +30,6 @@ void HomePageDialog::InitUI()
 {
 
 
-
 }
 
 void HomePageDialog::InitConnect()

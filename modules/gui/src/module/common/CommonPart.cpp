@@ -1,6 +1,5 @@
 #include "CommonPart.h"
 
-
 void ASQDialog::show()
 {
 	this->setFixedSize(this->size());
@@ -38,7 +37,7 @@ QCheckBox* ASQDialog::CreateCheckBox(QTableWidget* table, int row, int column)
 		temp_CheckBox->setChecked(false);
 		temp_CheckBox->setFont(table->font());
 		temp_CheckBox->setFocusPolicy(Qt::NoFocus);
-		temp_CheckBox->setEnabled(false);
+		temp_CheckBox->setEnabled(true);
 		hLayout->addWidget(temp_CheckBox); //ÃÌº”
 		hLayout->setMargin(0); //…Ë÷√±ﬂ‘µæ‡¿Î
 		hLayout->setAlignment(temp_CheckBox, Qt::AlignCenter); //æ”÷–
@@ -52,4 +51,8 @@ QCheckBox* ASQDialog::CreateCheckBox(QTableWidget* table, int row, int column)
 sendStruct::sendStruct(int Type, QString Description, QByteArray ByteData)
 {
 
+}
+
+UserLeaveMessageData::UserLeaveMessageData(string m_username, int m_type, string m_datetime, string m_reason, as::leaveStatus m_status, string m_adress)
+{
 }

@@ -114,12 +114,12 @@ namespace as
 		}
 	}
 
-	vector<UserLeaveMessageData>& UserManage::GetLeavemess()
+	vector<UserLeaveMessage>& UserManage::GetLeavemess()
 	{
 		return m_vleavemess;
 	}
 
-	void UserManage::InsertLeavemess(vector<UserLeaveMessageData> vec)
+	void UserManage::InsertLeavemess(vector<UserLeaveMessage> vec)
 	{
 		for (auto& data : vec)
 		{

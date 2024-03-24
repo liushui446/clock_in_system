@@ -5,16 +5,12 @@
 
 namespace as
 {
-	
-
 	enum class LanguegeType
 	{
 		CHS = 0,
 		ENG,
 		KOR
 	};
-
-    
 
 	class AS_EXPORTS CommonProcess
 	{
