@@ -1,5 +1,5 @@
-﻿#ifndef AS_TAKELEAVEDIALOG_H
-#define AS_TAKELEAVEDIALOG_H
+﻿#ifndef AS_TCPSERVERDIALOG_H
+#define AS_TCPSERVERDIALOG_H
 
 #include "common/CommonPart.h"
 #include "as/CommonCore.hpp"
@@ -13,33 +13,50 @@
 //Qt
 #include <QLineEdit>
 
+//Tcp
+#include "qtcpserver.h"
+#include "qtcpsocket.h"
+
 namespace Ui
 {
-	class TakeLeaveDialog;
+	class TcpServerDialog;
 }
 using namespace as;
 
-class TakeLeaveDialog : public ASQDialog
+class TcpServerDialog : public ASQDialog
 {
     Q_OBJECT
 public:
-	TakeLeaveDialog(QWidget* parent = nullptr);
-	~TakeLeaveDialog();
+	TcpServerDialog(QWidget* parent = nullptr);
+	~TcpServerDialog();
 
 	void InitUI();
-	
 	void InitConnect();
 	
+	void hasConnect();
+	void handleSendOutData(const sendStruct& data);
+	void handleGetRecieveData();
 signals:
 
 private slots:
-
-private:
-    Ui::TakeLeaveDialog *m_ui;
-
-	SubmitDialog* m_cSubmitDialog;
 	
 
+private:
+    Ui::TcpServerDialog* m_ui;
+
+	QTcpServer* m_server;
+	QTcpSocket* m_socket;
+
+	//SubmitDialog* m_cSubmitDialog;
+	
+	bool m_ishead;
+	QString m_fileName;
+	int m_fileSize;			//接收文件的总大小
+	int m_recvSize;			//当前接收文件的大小
+	QByteArray m_filebuf;		//当前接收的文件数据
+
+	bool m_isGetPartData;
+	int m_requestDataSize;
 };
 
 #endif

@@ -1,5 +1,5 @@
-﻿#ifndef AS_TAKELEAVEDIALOG_H
-#define AS_TAKELEAVEDIALOG_H
+﻿#ifndef AS_APPROVEDIALOG_H
+#define AS_APPROVEDIALOG_H
 
 #include "common/CommonPart.h"
 #include "as/CommonCore.hpp"
@@ -15,30 +15,32 @@
 
 namespace Ui
 {
-	class TakeLeaveDialog;
+	class ApproveLeaveDialog;
 }
 
 class MainWindow;
 
 using namespace as;
 
-class TakeLeaveDialog : public ASQDialog
+class ApproveLeaveDialog : public ASQDialog
 {
     Q_OBJECT
 public:
-	TakeLeaveDialog(QWidget* parent = nullptr);
-	~TakeLeaveDialog();
+	ApproveLeaveDialog(QWidget* parent = nullptr);
+	~ApproveLeaveDialog();
 
 	void InitUI();
 	
 	void InitConnect();
+
+	void RefLeaveDataListview();
 	
 signals:
 
 private slots:
 
 private:
-    Ui::TakeLeaveDialog *m_ui;
+    Ui::ApproveLeaveDialog*m_ui;
 
 	SubmitDialog* m_cSubmitDialog;
 	

@@ -8,7 +8,7 @@
 
 
 #find_package(Qt6 COMPONENTS  Widgets REQUIRED)
-find_package(Qt5 COMPONENTS Core Gui Widgets UiTools REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets UiTools Network REQUIRED)
  # set up a mapping so that the Release configuration for the Qt imported target is
  # used in the COVERAGE CMake configuration.
 

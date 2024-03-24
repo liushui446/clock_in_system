@@ -212,11 +212,6 @@ if (OPTIMIZER_PACK)
     as_module_include_directories(${Opt_INCLUDE_DIR})
 endif()
 
-message("add hdrs test5")
-message("${gui_ext_hdrs}")
-message("add hdrs test6")
-message("${gui_srcs}")
-
 list(APPEND extra_libs ${OpenCV_LIBS})
 #编辑gui目录下个文件夹可以使用相对路径
 as_create_module(${GUI_LIBRARIES})
@@ -254,8 +249,9 @@ target_link_libraries( ${the_module}
     PRIVATE
         Qt5::PrintSupport
         Qt5::Charts
+        Qt5::Network
         Eigen3::Eigen
-	    ${Boost_LIBRARIES}
+	${Boost_LIBRARIES}
 )
 # target_link_libraries( ${the_module}
     # PRIVATE

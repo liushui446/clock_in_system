@@ -11,6 +11,7 @@
 
 //Qt
 #include <QLineEdit>
+#include "qtcpsocket.h"
 
 namespace Ui
 {
@@ -28,6 +29,12 @@ public:
 	void InitUI();
 	
 	void InitConnect();
+
+	QTcpSocket*& GetSocket();
+
+	string GetUsername();
+
+	UserType GetUserType();
 	
 signals:
 
@@ -39,7 +46,7 @@ private:
 	LoadDialogProcess m_LoadDialogProcess;
 
 	as::UserType m_eSelectMode;
-
+	QTcpSocket* m_socket;
 
 };
 

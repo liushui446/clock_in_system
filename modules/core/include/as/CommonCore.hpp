@@ -73,6 +73,13 @@ namespace as
 		Submit = 2						
 	};
 
+	enum class leaveStatus
+	{
+		Approvaling = 0,
+		Comfirm = 1,
+		NO_Pass = 2
+	};
+
 
 	class  AS_EXPORTS Point
 	{

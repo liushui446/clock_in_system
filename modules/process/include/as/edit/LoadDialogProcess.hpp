@@ -14,6 +14,7 @@ namespace as
 		LoadDialogProcess::LoadDialogProcess();
 
 		void SetUsername(string name);
+		string GetUsername();
 		void SetUserpwd(string pwd);
 		void SetUsertype(UserType type);
 

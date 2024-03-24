@@ -14,6 +14,10 @@ namespace as
 	{
 		m_curSignname = name;
 	}
+	string LoadDialogProcess::GetUsername()
+	{
+		return m_curSignname;
+	}
 
 	void LoadDialogProcess::SetUserpwd(string pwd)
 	{

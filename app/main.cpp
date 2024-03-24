@@ -37,7 +37,6 @@ bool InitDB()
     //获取数据库路径
     as::DataBasePath::GetDataBasePath();
     as::DB_MGR::GetInstance().GetUserData();
-    
 
     return false;
 }

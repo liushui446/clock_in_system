@@ -14,6 +14,8 @@ namespace as
 		KOR
 	};
 
+    
+
 	class AS_EXPORTS CommonProcess
 	{
 	public:

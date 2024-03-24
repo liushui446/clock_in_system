@@ -16,6 +16,7 @@
 #include <QtWidgets>
 
 #include "LoadDialog.h"
+#include "src/module/server/TcpServerDialog.h"
 
 #include "as/gui.hpp"
 #include "as/io.hpp"
@@ -56,22 +57,36 @@ namespace as
     {
 #if 1
         QApplication app(argc, argv);
-		
+
         if (!InitParam())
         {
             // todo: 返回错误或是弹框
         }
 
-        MainWindow mainwindow;
-        LoadDialog appTest;
-        appTest.setWindowTitle(QString::fromLocal8Bit("请假系统"));
-        //// 设置窗口标志，包括 Window 和 WindowCloseButtonHint
-        //appTest.setWindowFlags(appTest.windowFlags() | Qt::WindowCloseButtonHint);
-
-        if (appTest.exec() == QDialog::Accepted)
+        //TcpServerDialog serverdialog;
+        //serverdialog.setWindowTitle(QString::fromLocal8Bit("Server"));
+        //serverdialog.show();
+        MainWindow mainwindow_1;
+        //MainWindow mainwindow_2;
+        LoadDialog appTest_1;
+        //LoadDialog appTest_2;
+        appTest_1.setWindowTitle(QString::fromLocal8Bit("Take Leave System"));
+        if (appTest_1.exec() == QDialog::Accepted)
         {
-            mainwindow.show();
+            mainwindow_1.SetSocket(appTest_1.GetSocket());
+            mainwindow_1.SetAuthority(appTest_1.GetUsername(), appTest_1.GetUserType());
+            mainwindow_1.ShowUserNa();
+            mainwindow_1.show();
         }
+
+        //if (appTest_2.exec() == QDialog::Accepted)
+        //{
+        //    mainwindow_2.SetSocket(appTest_2.GetSocket());
+        //    mainwindow_2.SetUserNa(appTest_2.GetUsername());
+        //    mainwindow_2.ShowUserNa();
+        //    mainwindow_2.show();
+        //}   
+
 
         return app.exec();
 #else

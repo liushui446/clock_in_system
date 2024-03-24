@@ -34,6 +34,7 @@ namespace as
 			path = path.substr(0, slow_ptr - 1);
 		}
 		UserPath = path + "\\modules\\database\\src\\db\\UserdataDB.db";
+		//UserPath = "D:\\Debug\\db\\UserdataDB.db";
 		RangePath = path + "\\modules\\database\\src\\db\\RangeDB.db";
 	}
 

@@ -5,10 +5,43 @@
 namespace as
 {
 	class User;
+	class MD5;
+	struct UserLeaveMessageData;
 }
 
 namespace as
 {
+	struct UserLeaveMessageData
+	{
+		string m_username;
+		int m_type;  //(0:ÊÂ¼Ù 1:²¡¼Ù)
+		string m_datetime;
+		string m_reason;
+		leaveStatus m_status;
+		string m_adress;
+
+		UserLeaveMessageData()
+			: m_status(leaveStatus::Approvaling)
+		{
+			m_username = "";
+			m_type = 0;
+			m_datetime = "";
+			m_reason = "";
+			m_adress = "";
+		}
+
+		UserLeaveMessageData& operator=(UserLeaveMessageData& ref)
+		{
+			this->m_username = ref.m_username;
+			this->m_type = ref.m_type;
+			this->m_datetime = ref.m_datetime;
+			this->m_reason = ref.m_reason;
+			this->m_status = ref.m_status;
+			this->m_adress = ref.m_adress;
+			return *this;
+		}
+	};
+
 	class MD5
 	{
 	public:
@@ -202,8 +235,12 @@ namespace as
 		User GetUserParam(UserType type, string name);
 		//void InsertUserTypeParam(string name, User param);
 		void InsertUserParam(UserType type, string name, User param);
+
+		vector<UserLeaveMessageData>& GetLeavemess();
+		void InsertLeavemess(vector<UserLeaveMessageData> vec);
 	private:
 		map<UserType, map<string, User>> userDatabase;
+		vector<UserLeaveMessageData> m_vleavemess;
 	};
 }
 

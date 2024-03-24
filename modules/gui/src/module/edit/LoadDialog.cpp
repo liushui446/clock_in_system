@@ -43,9 +43,14 @@ void LoadDialog::InitUI()
     layout->setMargin(0);							//左右间距
     m_ui->widget_1->setLayout(layout);
 
-   
-
-
+    m_socket = new QTcpSocket(this);
+    //QString ip = QString::fromLocal8Bit("127.0.0.1");//获取ip
+    QString ip = QString::fromLocal8Bit("192.168.124.18");//获取ip
+    int port = 1122;//获取端口数据
+    m_socket->connectToHost(ip, port);//连接服务器
+    /*if (m_socket->waitForConnected(3000) == false) {
+        qDebug() << "connect error:" << m_socket->errorString();
+    }*/
 }
 
 void LoadDialog::InitConnect()
@@ -113,6 +118,7 @@ void LoadDialog::InitConnect()
                 {
                     if (m_LoadDialogProcess.identifyUserpwd(pwd))
                     {
+                        m_LoadDialogProcess.SetUsername(name);
                         this->accept();
                         return;
                     }
@@ -121,5 +127,21 @@ void LoadDialog::InitConnect()
                 tip_dialog.exec();
                 return;
             });
+}
+
+QTcpSocket*& LoadDialog::GetSocket()
+{
+    return m_socket;
+}
+
+string LoadDialog::GetUsername()
+{
+    //return m_LoadDialogProcess.GetUsername();
+    return m_ui->lineEdit_CriticalValue->text().toStdString();
+}
+
+UserType LoadDialog::GetUserType()
+{
+    return m_eSelectMode;
 }
 

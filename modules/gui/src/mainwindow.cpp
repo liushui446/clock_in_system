@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-// 3rdpart
-
-
 // Qt
 #include <QTimer>
 #include <QMenuBar>
@@ -33,7 +30,6 @@
 //其他
 //#include "as/CommonProcess.h"
 
-//using namespace items;
 using namespace cv;
 
 MainWindow::MainWindow(QWidget* parent) :
@@ -58,17 +54,14 @@ void MainWindow::iniUI()
 	//添加
 	m_ui->verticalLayout_2->insertWidget(0, m_cHomePageDialog);
 
-	//// 创建
-	//menuBar = new QMenuBar(this);
-	////menuBar->set(m_ui->centralwidget->geometry().width(), m_ui->centralwidget->geometry().height());
-	//fileMenu = menuBar->addMenu("#");
-	//fileMenu->addAction(QString::fromLocal8Bit("注销"));
-	//fileMenu->addAction(QString::fromLocal8Bit("退出"));
-	//m_ui->verticalLayout_3->setMenuBar(menuBar);
+
 }
 
 void MainWindow::iniConnect()
 {
+	connect(m_socket, &QTcpSocket::readyRead, this, &MainWindow::handleGetRecieveData);
+	//connect(m_socket, &QTcpSocket::disconnected, this, &MainWindow::handleSocketConnected);
+
 	connect(m_ui->toolButton_page_1, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
 		{
 			Q_UNUSED(checked);
@@ -134,9 +127,18 @@ void MainWindow::iniConnect()
 				}
 			}
 			m_CurDialogType = DialogType::Take_Leave;
-			m_cTakeLeaveDialog = new TakeLeaveDialog(this);
-			//添加
-			m_ui->verticalLayout_2->insertWidget(0, m_cTakeLeaveDialog);
+			if (m_curauthority == UserType::Student)
+			{
+				m_cTakeLeaveDialog = new TakeLeaveDialog(this);
+				m_ui->verticalLayout_2->insertWidget(0, m_cTakeLeaveDialog);
+			}
+			else
+			{
+				m_cApproveLeaveDialog = new ApproveLeaveDialog(this);
+				m_ui->verticalLayout_2->insertWidget(0, m_cApproveLeaveDialog);
+			}
+			
+			
 		});
 
 	connect(m_ui->toolButton_page_3, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
@@ -149,8 +151,16 @@ void MainWindow::iniConnect()
 				delete m_cHomePageDialog;
 				break;
 			case DialogType::Take_Leave:
-				m_cTakeLeaveDialog = nullptr;
-				delete m_cTakeLeaveDialog;
+				if (m_curauthority == UserType::Student)
+				{
+					m_cTakeLeaveDialog = nullptr;
+					delete m_cTakeLeaveDialog;
+				}
+				else
+				{
+					m_cApproveLeaveDialog = nullptr;
+					delete m_cApproveLeaveDialog;
+				}
 				break;
 			case DialogType::Submit:
 				return;
@@ -171,25 +181,101 @@ void MainWindow::iniConnect()
 
 		});
 
+
 	connect(m_ui->comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this](int index)
 		{
 			if (index == 1)
 			{
+				m_socket->disconnectFromHost();
 				this->close();
 			}
 		});
-
-	//// 连接信号和槽
-	//connect(fileMenu, &QMenu::triggered, this, [this](QAction* action) {
-	//	if (action->text() == QString::fromLocal8Bit("注销")) {
-	//		// 处理注销操作
-
-	//	}
-	//	else if (action->text() == QString::fromLocal8Bit("退出")) {
-	//		// 处理退出操作
-	//		this->close();
-	//	}
-	//	});
-
 	
 }
+
+void MainWindow::SetSocket(QTcpSocket* socket)
+{
+	m_socket = socket;
+	QByteArray data = QString::fromLocal8Bit("sign in success").toUtf8();
+	m_socket->write(data);
+}
+
+void MainWindow::HandinMess(string mess)
+{
+	QByteArray data = QString::fromLocal8Bit(mess.c_str()).toUtf8();
+	m_socket->write(data);
+}
+
+void MainWindow::SetUserNa(string mess)
+{
+	m_curusername = mess;
+}
+
+void MainWindow::SetAuthority(string mess, UserType auth)
+{
+	m_curusername = mess;
+	m_curauthority = auth;
+}
+
+void MainWindow::ShowUserNa()
+{
+	string temp = "你好,";
+	m_ui->label_user->setText(QString::fromLocal8Bit((temp + m_curusername).c_str()));
+
+	if (m_curauthority == UserType::Student)
+	{
+		m_ui->toolButton_page_2->setText(QString::fromLocal8Bit("请假"));
+	}
+	else
+	{
+		m_ui->toolButton_page_2->setText(QString::fromLocal8Bit("审批"));
+	}
+}
+
+void MainWindow::handleSendOutData(const sendStruct& data)
+{
+	if ((!m_socket) || m_socket->state() != QAbstractSocket::ConnectedState)
+		return;
+	QDataStream out(m_socket);
+	out << data.size() << data;//先发送数据大小，在发送数据本身
+	m_socket->flush();
+	/*把需要发送的数据封装在结构体里面发送*/
+}
+
+void MainWindow::handleGetRecieveData()
+{
+	if ((!m_socket) || m_socket->state() != QAbstractSocket::ConnectedState)
+		return;
+	if (m_isGetPartData == false) {
+		if (m_socket->bytesAvailable() < sizeof(int))//先接收数据的大小
+			return;
+		else
+		{
+			QDataStream in(m_socket);
+			in >> m_requestDataSize;//数据大小写入变量
+			m_isGetPartData = true;//设置标志，只接收到了数据大小，没接收到数据全部
+		}
+	}
+	if (m_isGetPartData == true) {
+		if (m_socket->bytesAvailable() < m_requestDataSize)//判断是否接收到了完整的数据
+			return;
+		else
+		{
+			QDataStream in(m_socket);
+			sendStruct receiveData;
+			in >> receiveData;//接收到了数据
+			m_requestDataSize = 0;//清空大小
+			m_isGetPartData = false;//清空标志
+			/*
+			数据接收成功，放置在receiveData中，可以做其他处理
+			doSomething(receiveData);
+			*/
+			
+			if (m_socket->bytesAvailable())//如果缓存区还存在数据，递归执行
+				handleGetRecieveData();
+		}
+	}
+}
+
+
+
