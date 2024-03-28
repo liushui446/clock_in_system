@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>基准点位置</string>
+   <string/>
   </property>
   <widget class="QWidget" name="widget_2" native="true">
    <property name="geometry">

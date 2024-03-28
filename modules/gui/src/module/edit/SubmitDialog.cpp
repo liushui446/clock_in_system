@@ -32,7 +32,7 @@ void SubmitDialog::InitUI()
     m_ui->tableWidget_1->setHorizontalHeaderLabels(paddata_headrs);
     m_ui->tableWidget_1->verticalHeader()->setVisible(true);
     m_ui->tableWidget_1->horizontalHeader()->setHighlightSections(false); 
-    m_ui->tableWidget_1->setFocusPolicy(Qt::NoFocus);
+    m_ui->tableWidget_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     m_ui->tableWidget_1->clearContents();
     m_ui->tableWidget_1->setRowCount(0);

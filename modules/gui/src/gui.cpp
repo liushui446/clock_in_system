@@ -70,7 +70,7 @@ namespace as
         ////MainWindow mainwindow_2;
         LoadDialog appTest_1;
         ////LoadDialog appTest_2;
-        //appTest_1.setWindowTitle(QString::fromLocal8Bit("Take Leave System"));
+        appTest_1.setWindowTitle(QString::fromLocal8Bit("Take Leave System"));
         if (appTest_1.exec() == QDialog::Accepted)
         {
             mainwindow_1.SetAuthority(appTest_1.GetUsername(), appTest_1.GetUserType());

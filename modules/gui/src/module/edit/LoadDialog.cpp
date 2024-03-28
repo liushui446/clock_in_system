@@ -401,25 +401,9 @@ void LoadDialog::InitUI()
 
     m_socket = new QTcpSocket(this);
     QString ip = QString::fromLocal8Bit("127.0.0.1");//获取ip
-    //QString ip = QString::fromLocal8Bit("192.168.124.18");//获取ip
     int port = 1122;//获取端口数据
     m_socket->connectToHost(ip, port);//连接服务器
-    /*if (m_socket->waitForConnected(3000) == false) {
-        qDebug() << "connect error:" << m_socket->errorString();
-    }*/
-    m_manager = new QNetworkAccessManager(this);
-    //GetOutNetIp();
-    //m_manager_ = new QNetworkAccessManager(this);
-    //QString ipadd = QString("156.59.17.7");
-    ////getPublicIp();
-    ////ggetadress();
-    ////getIPAndAddress();
-    ////BaiDuIpQuery(m_manager, ipadd);
-    //getOnlineIPs();
-    //char* txt = "192.168.124.18";
-    ////QHostInfo::lookupHost(txt, this, SLOT(onHostLookedUp(QHostInfo)));
-    //string ip_;
-    //ip_ = GetIp(txt);
+
     //qDebug() << QString::fromLocal8Bit(ip_.c_str());
 }
 
@@ -515,222 +499,24 @@ UserType LoadDialog::GetUserType()
     return m_eSelectMode;
 }
 
-void LoadDialog::getPublicIp()
-{
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
-    QNetworkRequest request(QUrl("http://api.ipify.org"));
-    m_reply = manager->get(request);
-
-    QObject::connect(m_reply, &QNetworkReply::finished, [=]() {
-        if (m_reply->error() == QNetworkReply::NoError) {
-            QByteArray data = m_reply->readAll();
-            m_ipAddress = data.toStdString();
-            GetPoint(m_ipAddress.data(), "ip.chinaz.com");
-            qDebug() << "Public IP Address: " << data;
-        }
-        else {
-            qDebug() << "Error occurred: " << m_reply->errorString();
-        }
-         m_reply->deleteLater();
-        manager->deleteLater();
-        });
-}
-
-void LoadDialog::BaiDuIpQuery(QNetworkAccessManager* manager, const QString& ip) {
-    QNetworkRequest request;
-    request.setUrl(QUrl("http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=PeR9Utg7G9MNLltViPXhw0xhUtabELu8"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    connect(manager, &QNetworkAccessManager::finished, this, &LoadDialog::onFinished);
-    manager->get(request);
-}
-
-void LoadDialog::onFinished(QNetworkReply* m_reply) {
-    if (m_reply->error()) {
-        qDebug() << "Error:" << m_reply->errorString();
-    }
-    else {
-        QString answer = m_reply->readAll();
-        qDebug() << "Answer:" << answer;
-        QJsonDocument jsonResponse = QJsonDocument::fromJson(answer.toUtf8());
-        QJsonObject jsonObject = jsonResponse.object();
-        QJsonArray contentArray = jsonObject["content"].toArray();
-        for (auto& var : contentArray)
-        {
-            QJsonObject contentObject = var.toObject();
-            qDebug() << "Address:" << contentObject["address"].toString();
-            qDebug() << "Address_detail:" << contentObject["address_detail"].toObject();
-            break; // 只获取第一个结果
-        }
-    }
-    m_reply->deleteLater();
-}
-
-void LoadDialog::onHostLookedUp(const QHostInfo& host)
-{
-    if (host.error() != QHostInfo::NoError) {
-        QMessageBox::information(this, QStringLiteral("提示"), host.errorString());
-        return;
-    }
-    QList<QHostAddress> adds = host.addresses();
-    if (adds.size()) {
-        const QHostAddress& addr = adds.first();
-
-        queryLocationOfIP(addr.toString());
-        qDebug() << addr.toString();
-    }
-}
-
-void LoadDialog::queryLocationOfIP(const QString& strIp)
-{
-    //string ip = strIp.toStdString();
-    //QString ssst = QString("112.14.29.174");
-   // const QString& strUrl = QString("http://api.map.baidu.com/location/ip?ak=%1&ip=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&coor=bd09ll").
-        //arg(strIp);
-    const QString& strUrl = QString("http://api.map.baidu.com/location/ip?ak=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&coor=bd09ll&ip=%1").arg(strIp);
-
-    QNetworkRequest request;
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setUrl(QUrl(strUrl));
-
-    m_reply_1 = m_manager->get(request);
-    connect(m_reply_1, SIGNAL(finished()), this, SLOT(replyFinished()));
-}
-
-void LoadDialog::querySpecialLocation()
-{
-    // 创建请求
-    QUrl url("http://api.map.baidu.com/reverse_geocoding/v3/?ak=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&output=json&coordtype=bd09ll&location=" + m_lat + "," + m_lon);
-    QNetworkRequest request(url);
-
-    // 发送请求
-    m_reply_1 = m_manager->get(request);
-
-    // 接收响应
-    QObject::connect(m_reply_1, &QNetworkReply::finished, [&]() {
-        if (m_reply_1->error() == QNetworkReply::NoError) {
-            // 读取响应数据
-            QByteArray response = m_reply_1->readAll();
-            QJsonParseError error;
-            // 解析JSON
-            QJsonDocument doc = QJsonDocument::fromJson(response, &error);
-            if (error.error != QJsonParseError::NoError) {
-                QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("JSON:数据结构有问题！"));
-                return QVariantMap();
-            }
-            QJsonObject jsonObject = doc.object();
-            int status = jsonObject.value("status").toInt();
-            if (status != 0) {
-                QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("状态码：%1").arg(status));
-                return QVariantMap();
-            }
-            // 提取位置信息
-            QJsonObject result = jsonObject["result"].toObject();
-            QString formattedAddress = result["formatted_address"].toString();
-            qDebug() << "country: " << jsonObject["result"].toObject()["addressComponent"].toObject()["country"].toString();
-            qDebug() << "province: " << jsonObject["result"].toObject()["addressComponent"].toObject()["province"].toString();
-            qDebug() << "city: " << jsonObject["result"].toObject()["addressComponent"].toObject()["city"].toString();
-            qDebug() << "district: " << jsonObject["result"].toObject()["addressComponent"].toObject()["district"].toString();
-            qDebug() << "town: " << jsonObject["result"].toObject()["addressComponent"].toObject()["town"].toString();
-            qDebug() << "street: " << jsonObject["result"].toObject()["addressComponent"].toObject()["street"].toString();
-            qDebug() << "Formatted Address: " << formattedAddress;
-            m_reply_1->deleteLater();
-            m_manager->deleteLater();
-        }
-        else {
-            qDebug() << "Error: " << m_reply_1->errorString();
-            // 释放资源
-            m_reply_1->deleteLater();
-        }
-        });
-}
-
-
-void LoadDialog::replyFinished()
-{
-    m_reply_1 = qobject_cast<QNetworkReply*>(sender());
-
-    if (m_reply_1->error() != QNetworkReply::NoError) {
-        QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("请求出错:%1").arg(m_reply_1->errorString()));
-    }
-    const QByteArray& bytes = m_reply_1->readAll();
-    const QVariantMap& varMap = parseLocationData(bytes);
-    showLocation(varMap);
-}
-
-QVariantMap LoadDialog::parseLocationData(const QByteArray& data)
-{
-    QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
-    if (error.error != QJsonParseError::NoError) {
-        QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("JSON:数据结构有问题！"));
-        return QVariantMap();
-    }
-    QJsonObject obj = doc.object();
-    int status = obj.value("status").toInt();
-    if (status != 0) {
-        QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("状态码：%1").arg(status));
-        return QVariantMap();
-    }
-    QJsonObject contentObj = obj.value("content").toObject();
-    QJsonObject contentArray = contentObj.value("address_detail").toObject();
-    qDebug() << contentObj.value("address").toString();
-    qDebug() << contentArray.value("province").toString();
-    return contentObj.toVariantMap();
-}
-
-
-void LoadDialog::showLocation(const QVariantMap& varMap)
-{
-    const QString& addrStr = varMap.value("address").toString();
-    //string ad = addrStr.toStdString();
-    const QVariantMap& ptMap = varMap.value("point").toMap();
-    QString longitudeStr = ptMap.value("x").toString(); //经度
-    QString latitudeStr = ptMap.value("y").toString(); //纬度
-    const QString& txt = QStringLiteral("城市：%1 \n经度：%2   纬度：%3").arg(addrStr).arg(longitudeStr).arg(latitudeStr);
-    m_lat = latitudeStr;
-    m_lon = longitudeStr;
-    qDebug() << txt;
-    querySpecialLocation();
-    //m_manager->deleteLater();
-}
-
-void LoadDialog::getOnlineIPs() {
-    for(QNetworkInterface inter: QNetworkInterface::allInterfaces()) {
-        // 跳过本地回环接口
-        if (inter.flags().testFlag(QNetworkInterface::IsLoopBack)) {
-            continue;
-        }
-        // 跳过不活跃的接口
-        if (!inter.flags().testFlag(QNetworkInterface::IsUp)) {
-            continue;
-        }
-        // 遍历每个接口的地址
-        for(QNetworkAddressEntry entry: inter.addressEntries()) {
-            // 只获取IPv4地址
-            if (entry.ip().protocol() == QAbstractSocket::IPv4Protocol) {
-                qDebug() << "Online IP:" << entry.ip().toString();
-            }
-        }
-    }
-}
-
-void LoadDialog::GetOutNetIp()
-{
-    //QNetworkAccessManager m_manager;
-    QUrl url("http://ifconfig.me/ip");
-    QNetworkRequest request(url);
-
-    m_reply_1 = m_manager->get(request);
-    QObject::connect(m_reply_1, &QNetworkReply::finished, [&]() {
-        if (m_reply_1->error() == QNetworkReply::NoError) {
-            m_ipnet = m_reply_1->readAll();
-            std::cout << "External IP: " << m_ipnet.toStdString() << std::endl;
-        }
-        else {
-            std::cerr << "Error: " << m_reply_1->errorString().toStdString() << std::endl;
-            return;
-        }
-        queryLocationOfIP(m_ipnet);
-        });
-}
+//void LoadDialog::getPublicIp()
+//{
+//    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+//    QNetworkRequest request(QUrl("http://api.ipify.org"));
+//    m_reply = manager->get(request);
+//
+//    QObject::connect(m_reply, &QNetworkReply::finished, [=]() {
+//        if (m_reply->error() == QNetworkReply::NoError) {
+//            QByteArray data = m_reply->readAll();
+//            m_ipAddress = data.toStdString();
+//            GetPoint(m_ipAddress.data(), "ip.chinaz.com");
+//            qDebug() << "Public IP Address: " << data;
+//        }
+//        else {
+//            qDebug() << "Error occurred: " << m_reply->errorString();
+//        }
+//        m_reply->deleteLater();
+//        manager->deleteLater();
+//        });
+//}
 

@@ -39,27 +39,11 @@ public:
 
 	UserType GetUserType();
 
-	void getPublicIp();
-
-	void BaiDuIpQuery(QNetworkAccessManager* manager, const QString& ip);
-	
-	void queryLocationOfIP(const QString& strIp);
-
-	void querySpecialLocation();
-
-	QVariantMap parseLocationData(const QByteArray& data);
-
-	void showLocation(const QVariantMap& varMap);
-
-	void getOnlineIPs();
-
-	void GetOutNetIp();
+	//void getPublicIp();
 signals:
 
 private slots:
-	void onFinished(QNetworkReply* reply);
-	void onHostLookedUp(const QHostInfo& host);
-	void replyFinished();
+
 private:
     Ui::LoadDialog *m_ui;
 	
@@ -68,20 +52,6 @@ private:
 	as::UserType m_eSelectMode;
 	QTcpSocket* m_socket;
 
-	QNetworkReply* m_reply;
-	QNetworkReply* m_reply_1;
-	QNetworkReply* m_reply_2;
-	QNetworkReply* m_reply_3;
-
-	QNetworkAccessManager* m_manager;
-	QNetworkAccessManager* m_manager_;
-
-
-	string m_ipAddress;
-	QString m_ipnet = "";
-
-	QString m_lat;
-	QString m_lon;
 };
 
 #endif

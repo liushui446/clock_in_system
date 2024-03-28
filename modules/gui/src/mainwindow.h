@@ -17,7 +17,12 @@
 
 #include "qtcpsocket.h"
 #include "src/module/common/CustomDataStreamOperators.h"
-//#include "common/CommonPart.h"
+#include <QNetworkInterface>
+#include <QLineEdit>
+#include "qtcpsocket.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QHostInfo>
 
 namespace Ui {
     class MainWindow;
@@ -58,7 +63,17 @@ public:
 
     void MessToData(UserLeaveMessage data, UserLeaveMessageData& mess);
 
+    void queryLocationOfIP(const QString& strIp);
+    void querySpecialLocation();
+    QVariantMap parseLocationData(const QByteArray& data);
+    void showLocation(QVariantMap varMap);
+    void getOnlineIPs();
+    void GetOutNetIp();
+    
     Ui::MainWindow* m_ui;
+
+private slots:
+    void replyFinished();
 private:
     HomePageDialog* m_cHomePageDialog;
     TakeLeaveDialog* m_cTakeLeaveDialog;
@@ -77,6 +92,16 @@ private:
 
     bool m_isGetPartData;
     int m_requestDataSize;
+
+    QNetworkAccessManager* m_manager;
+    QNetworkReply* m_reply_1;
+
+    string m_ipAddress;
+    QString m_ipnet = "";
+
+    QString m_lat;
+    QString m_lon;
+    
 };
 
 #endif

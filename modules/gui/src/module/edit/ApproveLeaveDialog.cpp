@@ -40,8 +40,7 @@ void ApproveLeaveDialog::InitUI()
     m_ui->tableWidget->verticalHeader()->setVisible(true);
     m_ui->tableWidget->horizontalHeader()->setVisible(true);
     m_ui->tableWidget->horizontalHeader()->setHighlightSections(false);
-    //m_ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_ui->tableWidget->setFocusPolicy(Qt::NoFocus);
+    m_ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     m_ui->tableWidget->setColumnWidth(0, 140);
     m_ui->tableWidget->setColumnWidth(1, 60);
