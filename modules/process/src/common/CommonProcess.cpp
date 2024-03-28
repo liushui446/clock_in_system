@@ -7,6 +7,8 @@
 #include "opencv2/imgproc.hpp"
 #include <as/ASContext.hpp>
 
+//#include <curl/curl.h>
+
 namespace as
 {
 	string wstringastring(const std::wstring& ws)
@@ -27,6 +29,26 @@ namespace as
 		static CommonProcess instance;
 		return instance;
 	}
+
+	/*std::string get_public_ip() {
+		CURL* curl;
+		CURLcode res;
+		std::string readBuffer;
+
+		curl = curl_easy_init();
+		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_URL, "https://api.ipify.org");
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+			res = curl_easy_perform(curl);
+			if (res != CURLE_OK)
+				std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+
+			curl_easy_cleanup(curl);
+		}
+
+		return readBuffer;
+	}*/
 
 	string CommonProcess::intToHex(int n)
 	{

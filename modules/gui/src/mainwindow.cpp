@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QTableWidgetItem>
 
+
 // OpenCV
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
@@ -48,38 +49,6 @@ MainWindow::~MainWindow()
 	delete m_ui;
 }
 
-//QDataStream& operator<<(QDataStream& out, const as::UserLeaveMessageData& s)
-//{
-//	out << QString::fromLocal8Bit(s.m_username.c_str())
-//		<< s.m_type
-//		<< QString::fromLocal8Bit(s.m_datetime.c_str())
-//		<< QString::fromLocal8Bit(s.m_reason.c_str())
-//		<< (int)s.m_status
-//		<< QString::fromLocal8Bit(s.m_adress.c_str());
-//	return out;
-//}
-//
-//QDataStream& operator>>(QDataStream& in, as::UserLeaveMessageData& s) {
-//
-//	QString data_1;
-//	QString data_2;
-//	QString data_3;
-//	int data_4;
-//	QString data_5;
-//
-//	in >> data_1
-//		>> s.m_type
-//		>> data_2
-//		>> data_3
-//		>> data_4
-//		>> data_5;
-//	s.m_username = data_1.toStdString();
-//	s.m_datetime = data_2.toStdString();
-//	s.m_reason = data_3.toStdString();
-//	s.m_status = static_cast<as::leaveStatus>(data_4);
-//	s.m_adress = data_5.toStdString();
-//	return in;
-//}
 
 void MainWindow::iniUI()
 {

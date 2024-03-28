@@ -63,21 +63,21 @@ namespace as
             // todo: 返回错误或是弹框
         }
 
-        TcpServerDialog serverdialog;
+        /*TcpServerDialog serverdialog;
         serverdialog.setWindowTitle(QString::fromLocal8Bit("Server"));
-        serverdialog.show();
-        //MainWindow mainwindow_1;
+        serverdialog.show();*/
+        MainWindow mainwindow_1;
         ////MainWindow mainwindow_2;
-        //LoadDialog appTest_1;
+        LoadDialog appTest_1;
         ////LoadDialog appTest_2;
         //appTest_1.setWindowTitle(QString::fromLocal8Bit("Take Leave System"));
-        //if (appTest_1.exec() == QDialog::Accepted)
-        //{
-        //    mainwindow_1.SetAuthority(appTest_1.GetUsername(), appTest_1.GetUserType());
-        //    mainwindow_1.SetSocket(appTest_1.GetSocket());
-        //    mainwindow_1.ShowUserNa();
-        //    mainwindow_1.show();
-        //}
+        if (appTest_1.exec() == QDialog::Accepted)
+        {
+            mainwindow_1.SetAuthority(appTest_1.GetUsername(), appTest_1.GetUserType());
+            mainwindow_1.SetSocket(appTest_1.GetSocket());
+            mainwindow_1.ShowUserNa();
+            mainwindow_1.show();
+        }
 
         /*if (appTest_2.exec() == QDialog::Accepted)
         {
