@@ -404,14 +404,10 @@ void LoadDialog::InitUI()
     int port = 1122;//获取端口数据
     m_socket->connectToHost(ip, port);//连接服务器
 
-    //qDebug() << QString::fromLocal8Bit(ip_.c_str());
 }
 
 void LoadDialog::InitConnect()
 {
-    // ==== 位置类型 下拉选择 更新标记位置 ====
-    
-
     connect(m_ui->radioButton_1, static_cast<void (QRadioButton::*)(bool)>(&QRadioButton::toggled), this, [this](bool checked)
         {
             if (checked)
@@ -430,7 +426,6 @@ void LoadDialog::InitConnect()
             }
         });
 
-
         connect(m_ui->lineEdit_CriticalValue, static_cast<void (QLineEdit::*)()>(&QLineEdit::editingFinished), this, [this]()
             {
                 string val = m_ui->lineEdit_CriticalValue->text().toLocal8Bit();
@@ -447,8 +442,10 @@ void LoadDialog::InitConnect()
 
         connect(m_ui->checkBox, static_cast<void (QCheckBox::*)(int)>(&QCheckBox::stateChanged), this, [this](bool checked)
             {
-                bool val = checked;
-
+                if(checked)
+                    m_ui->lineEdit_Position->setEchoMode(QLineEdit::Normal);
+                else
+                    m_ui->lineEdit_Position->setEchoMode(QLineEdit::Password);
             });
 
         connect(m_ui->toolButton_get_2, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)

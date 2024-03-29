@@ -35,9 +35,6 @@ namespace as
 		}
 		/*test*/UserPath = string(getcwd(NULL, 0)) + "\\UserdataDB.db";
 		//UserPath = path + "\\modules\\database\\src\\db\\UserdataDB.db";
-		//UserPath = "D:\\clock_in_server\\db\\UserdataDB.db";
-		//UserPath = "D:\\clock_in_teacher\\db\\UserdataDB.db";
-		//UserPath = "D:\\clock_in_student\\db\\UserdataDB.db";
 		RangePath = path + "\\modules\\database\\src\\db\\RangeDB.db";
 	}
 

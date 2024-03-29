@@ -16,6 +16,7 @@ namespace as
 		int nRow = 0, nColumn = 0;
 
 		sql_1 = fmt::format("select * from UserPassword");
+		sql_2 = fmt::format("select * from PositionPw");
 		try
 		{
 			int res = sqlite3_get_table(as::UserDBUtils::Getinstance().getsqlite(), sql_1.c_str(), &dbResult, &nRow, &nColumn, &cErrMsg);
@@ -24,6 +25,7 @@ namespace as
 				std::cout << "UserPassword select fail" << (cErrMsg ? cErrMsg : "0 count") << endl;
 				as::UserDBUtils::Getinstance().free();
 			}
+			
 		}
 		catch (...)
 		{
@@ -52,7 +54,30 @@ namespace as
 				level->GetUserManagedata()->InsertUserParam(tmp_user.getUserType(), string(dbResult[index]), tmp_user);
 			}
 		}
-		sqlite3_free_table(dbResult);
+
+		try
+		{
+			int res = sqlite3_get_table(as::UserDBUtils::Getinstance().getsqlite(), sql_2.c_str(), &dbResult, &nRow, &nColumn, &cErrMsg);
+			if (res != SQLITE_OK)
+			{
+				std::cout << "PositionPw select fail" << (cErrMsg ? cErrMsg : "0 count") << endl;
+				as::UserDBUtils::Getinstance().free();
+			}
+
+		}
+		catch (...)
+		{
+			as::UserDBUtils::Getinstance().free();
+			throw nullptr;
+		}
+		//string code = string(dbResult[1]);
+		if (dbResult == nullptr )
+		{
+			sqlite3_free_table(dbResult);
+			return;
+		}
+		level->GetInstance().GetUserManagedata()->SetAkCode(string(dbResult[1]));
+		
 	}
 
 	

@@ -37,22 +37,34 @@ void TakeLeaveDialog::InitConnect()
     connect(m_ui->toolButton_look, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
         {
             Q_UNUSED(checked);
-            m_cSubmitDialog = new SubmitDialog(this);
+            UserLeaveMessageData temp_mess;
+            temp_mess.m_type = 1;
+            temp_mess.m_datetime = "2024/03/25";
+            temp_mess.m_reason = "leg broken";
+            temp_mess.m_status = leaveStatus::Approvaling;
+            m_cSubmitDialog = new SubmitDialog(temp_mess,this);
             if (m_cSubmitDialog->exec() == QDialog::Accepted)
             {
-                UserLeaveMessageData temp_mess;
-                temp_mess.m_type = 1;
-                temp_mess.m_datetime = "2024/03/25";
-                temp_mess.m_reason = "leg broken";
-                temp_mess.m_status = leaveStatus::Approvaling;
-
                 string des = "this is mess";
                 m_cmain->handleSendOutData(temp_mess, des);
                 
                 OperationCheckDialog tip_dialog(as::WidgetType::Tip, tr(as::CommonProcess::GetInstance().string_To_UTF8("提交成功!").c_str()), 1, this);
                 tip_dialog.exec();
-                //清空信息
             }
         });
+
+    connect(m_ui->toolButton_position, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
+        {
+            Q_UNUSED(checked);
+
+            m_cmain->SelfPosition();
+
+        });
+}
+
+void TakeLeaveDialog::ShowPosition(QString adress)
+{
+    m_ui->lineEdit_3->clear();
+    m_ui->lineEdit_3->setText(adress);
 }
 

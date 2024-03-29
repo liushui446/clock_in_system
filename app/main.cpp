@@ -19,16 +19,6 @@
 
 void MainTest(int argc, char* argv[])
 {
-    std::cout << "Hello world!" << std::endl;
-    as::CameraTest();
-    as::CoreTest();
-    as::DataTest();
-    as::DataBaseTest();
-    as::HardwareTest();
-    as::ImgProcTest();
-    as::IOTest();
-    as::OptimizationTest();
-    as::ProcessTest();
     as::GuiTest(argc, argv);
 }
 
@@ -48,7 +38,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    MainTest(argc, argv);
+    //MainTest(argc, argv);
 
     as::RunGUI(argc, argv);
     return 0;

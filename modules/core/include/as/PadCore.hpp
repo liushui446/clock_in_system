@@ -241,9 +241,13 @@ namespace as
 
 		vector<UserLeaveMessage>& GetLeavemess();
 		void InsertLeavemess(vector<UserLeaveMessage> vec);
+
+		void SetAkCode(string ak);
+		string GetAkCode();
 	private:
 		map<UserType, map<string, User>> userDatabase;
 		vector<UserLeaveMessage> m_vleavemess;
+		string m_strAkCode;
 	};
 }
 

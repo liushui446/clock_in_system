@@ -52,6 +52,7 @@ namespace as
 
 	UserManage::UserManage()
 	{
+		m_strAkCode = "";
 	}
 
 	map<UserType, map<string, User>>& UserManage::GetuserDataRes()
@@ -127,6 +128,13 @@ namespace as
 		}
 	}
 
-
+	void UserManage::SetAkCode(string ak)
+	{
+		m_strAkCode = ak;
+	}
+	string UserManage::GetAkCode()
+	{
+		return m_strAkCode;
+	}
 
 }

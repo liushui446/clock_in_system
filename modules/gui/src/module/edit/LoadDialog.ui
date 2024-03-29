@@ -61,7 +61,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>记住密码</string>
+     <string>显示密码</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">

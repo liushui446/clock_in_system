@@ -63,12 +63,14 @@ public:
 
     void MessToData(UserLeaveMessage data, UserLeaveMessageData& mess);
 
-    void queryLocationOfIP(const QString& strIp);
-    void querySpecialLocation();
+    void queryLocationOfIP(const QString& strIp, const QString& strAk);
+    void querySpecialLocation(const QString& strAk);
     QVariantMap parseLocationData(const QByteArray& data);
     void showLocation(QVariantMap varMap);
     void getOnlineIPs();
     void GetOutNetIp();
+
+    void SelfPosition();
     
     Ui::MainWindow* m_ui;
 
@@ -102,6 +104,7 @@ private:
     QString m_lat;
     QString m_lon;
     
+    QString m_qrOutAdress;
 };
 
 #endif

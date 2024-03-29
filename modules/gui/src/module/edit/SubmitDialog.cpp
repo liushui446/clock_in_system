@@ -8,12 +8,12 @@
 #include <QtWidgets>
 
 
-SubmitDialog::SubmitDialog(QWidget *parent)
+SubmitDialog::SubmitDialog(UserLeaveMessageData mess, QWidget *parent)
     : ASQDialog(parent),
 	m_ui(new Ui::SubmitDialog)
 {
 	m_ui->setupUi(this);
-
+    m_mess = "请假日期："+ mess.m_datetime + ",原因：" + mess.m_reason;
     InitUI();
     InitConnect();
 }
@@ -39,9 +39,9 @@ void SubmitDialog::InitUI()
 
     m_ui->tableWidget_1->setRowCount(1);
     int index = 0;
-    string message = "student_1 Leave Message";
+    //string message = "student_1 Leave Message";
     //表格内容设置
-    m_ui->tableWidget_1->setItem(index, 0, new QTableWidgetItem(QString::fromLocal8Bit(message.c_str())));
+    m_ui->tableWidget_1->setItem(index, 0, new QTableWidgetItem(QString::fromLocal8Bit(m_mess.c_str())));
     m_ui->tableWidget_1->item(index, 0)->setTextAlignment(Qt::AlignCenter);
     m_ui->tableWidget_1->item(index, 0)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 

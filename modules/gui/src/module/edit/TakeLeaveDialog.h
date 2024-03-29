@@ -32,6 +32,8 @@ public:
 	void InitUI();
 	
 	void InitConnect();
+
+	void ShowPosition(QString adress);
 	
 signals:
 

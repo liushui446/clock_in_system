@@ -21,7 +21,7 @@ class SubmitDialog : public ASQDialog
 {
     Q_OBJECT
 public:
-	SubmitDialog(QWidget* parent = nullptr);
+	SubmitDialog(UserLeaveMessageData mess, QWidget* parent = nullptr);
 	~SubmitDialog();
 
 	void InitUI();
@@ -34,7 +34,7 @@ private slots:
 
 private:
     Ui::SubmitDialog*m_ui;
-
+	string m_mess = "";
 };
 
 #endif

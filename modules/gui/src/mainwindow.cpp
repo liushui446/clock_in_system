@@ -66,15 +66,12 @@ void MainWindow::iniUI()
 	m_ui->toolButton_page_3->setEnabled(false);
 
 	m_socket = NULL;
-
-	//客户端定位
-	/*m_manager = new QNetworkAccessManager(this);
-	GetOutNetIp();*/
 }
 
 void MainWindow::iniConnect()
 {
 	//connect(m_socket, &QTcpSocket::disconnected, this, &MainWindow::handleSocketConnected);
+
 
 	connect(m_ui->toolButton_page_1, static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked), this, [this](bool checked)
 		{
@@ -402,13 +399,13 @@ void MainWindow::MessToData(UserLeaveMessage data, UserLeaveMessageData& mess)
 	mess.m_adress = data.m_adress;
 }
 
-void MainWindow::queryLocationOfIP(const QString& strIp)
+void MainWindow::queryLocationOfIP(const QString& strIp, const QString& strAk)
 {
 	//string ip = strIp.toStdString();
 	//QString ssst = QString("112.14.29.174");
    // const QString& strUrl = QString("http://api.map.baidu.com/location/ip?ak=%1&ip=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&coor=bd09ll").
 		//arg(strIp);
-	const QString& strUrl = QString("http://api.map.baidu.com/location/ip?ak=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&coor=bd09ll&ip=%1").arg(strIp);
+	const QString& strUrl = QString("http://api.map.baidu.com/location/ip?ak=%2&coor=bd09ll&ip=%1").arg(strIp).arg(strAk);
 
 	QNetworkRequest request;
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -418,10 +415,11 @@ void MainWindow::queryLocationOfIP(const QString& strIp)
 	connect(m_reply_1, SIGNAL(finished()), this, SLOT(replyFinished()));
 }
 
-void MainWindow::querySpecialLocation()
+void MainWindow::querySpecialLocation(const QString& strAk)
 {
 	// 创建请求
-	QUrl url("http://api.map.baidu.com/reverse_geocoding/v3/?ak=PeR9Utg7G9MNLltViPXhw0xhUtabELu8&output=json&coordtype=bd09ll&location=" + m_lat + "," + m_lon);
+	const QString& strUrl = QString("http://api.map.baidu.com/reverse_geocoding/v3/?ak=%1&output=json&coordtype=bd09ll&location=").arg(strAk);
+	QUrl url(strUrl + m_lat + "," + m_lon);
 	QNetworkRequest request(url);
 
 	// 发送请求
@@ -447,6 +445,7 @@ void MainWindow::querySpecialLocation()
 			}
 			// 提取位置信息
 			QJsonObject result = jsonObject["result"].toObject();
+			QJsonObject addresscomponent = result["addressComponent"].toObject();
 			QString formattedAddress = result["formatted_address"].toString();
 			qDebug() << "country: " << jsonObject["result"].toObject()["addressComponent"].toObject()["country"].toString();
 			qDebug() << "province: " << jsonObject["result"].toObject()["addressComponent"].toObject()["province"].toString();
@@ -455,11 +454,22 @@ void MainWindow::querySpecialLocation()
 			qDebug() << "town: " << jsonObject["result"].toObject()["addressComponent"].toObject()["town"].toString();
 			qDebug() << "street: " << jsonObject["result"].toObject()["addressComponent"].toObject()["street"].toString();
 			qDebug() << "Formatted Address: " << formattedAddress;
+			m_qrOutAdress = addresscomponent["country"].toString()+",";
+			m_qrOutAdress = m_qrOutAdress + addresscomponent["province"].toString() + addresscomponent["city"].toString() + ",";
+			m_qrOutAdress = m_qrOutAdress + addresscomponent["district"].toString() +","+ addresscomponent["town"].toString() + ",";
+			m_qrOutAdress = m_qrOutAdress + addresscomponent["street"].toString();
+			QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("Positon Success!"));
+			if (m_CurDialogType == DialogType::Take_Leave)
+			{
+				m_cTakeLeaveDialog->ShowPosition(m_qrOutAdress);
+			}
+
 			m_reply_1->deleteLater();
 			m_manager->deleteLater();
 		}
 		else {
-			qDebug() << "Error: " << m_reply_1->errorString();
+			//qDebug() << "Error: " << m_reply_1->errorString();
+			QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("Error：%1").arg(m_reply_1->errorString()));
 			// 释放资源
 			m_reply_1->deleteLater();
 		}
@@ -518,7 +528,7 @@ void MainWindow::showLocation(QVariantMap varMap)
 	ptMap.clear();
 	varMap.clear();
 
-	querySpecialLocation();
+	querySpecialLocation(QString::fromLocal8Bit(ASContext::GetInstance().GetUserManagedata()->GetAkCode().c_str()));
 	//m_manager->deleteLater();
 }
 
@@ -555,10 +565,18 @@ void MainWindow::GetOutNetIp()
 			std::cout << "External IP: " << m_ipnet.toStdString() << std::endl;
 		}
 		else {
-			std::cerr << "Error: " << m_reply_1->errorString().toStdString() << std::endl;
+			QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("Error：%1").arg(m_reply_1->errorString()));
 			return;
 		}
-		queryLocationOfIP(m_ipnet);
+
+		queryLocationOfIP(m_ipnet,QString::fromLocal8Bit(ASContext::GetInstance().GetUserManagedata()->GetAkCode().c_str()));
 		});
+}
+
+void MainWindow::SelfPosition()
+{
+	//客户端定位
+	m_manager = new QNetworkAccessManager(this);
+	GetOutNetIp();
 }
 
