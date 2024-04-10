@@ -374,23 +374,12 @@ endif()
 include(cmake/ASFindOpenCV.cmake)
 include(cmake/ASFindLibsGUI.cmake)
 include(cmake/ASFindBoost.cmake)
-include(cmake/ASFindEigen.cmake)
 include(cmake/ASFindSqlite.cmake)
 include(cmake/ASFindLog.cmake)
-include(cmake/ASFindHIK.cmake)
-include(cmake/ASFindMvCamera.cmake)
-include(cmake/ASFindOPT.cmake)
-include(cmake/ASFindPlxApi.cmake)
 include(cmake/ASFindgflags.cmake)
 include(cmake/ASFindglog.cmake)
 include(cmake/ASFindYAML.cmake)
 
-# include(cmake/ASFindSWL.cmake)
-# include(cmake/ASFindCeres.cmake)
-# include(cmake/ASFindg2o.cmake)
-# include(cmake/ASFindSuitesparse.cmake)
-# include(cmake/ASFindPCL.cmake)
-# include(cmake/ASFindVTK.cmake)
 
 # ----------------------------------------------------------------------------
 # Code trace support

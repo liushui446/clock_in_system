@@ -65,8 +65,6 @@ if(HAVE_QT5)
     include_directories(${Qt5${dt5_dep}_INCLUDE_DIRS} ${LOG_INCLUDE_DIR})#在此添加了头文件
     list(APPEND GUI_LIBRARIES ${Qt5${dt5_dep}_LIBRARIES})
   endforeach()
-  message("add to HAVE_QT5 loop test!!")
-  
 
 elseif(HAVE_QT5_)
   # "Automoc" doesn't work properly with as_world build, use QT5_WRAP_CPP() directly
@@ -156,8 +154,7 @@ elseif(HAVE_COCOA)
 endif()
 
 list(APPEND GUI_LIBRARIES ${OpenCV_LIBS})
-message("opencv big test")
-message("${GUI_LIBRARIES}")
+
 if(TRUE)
   # these variables are set by 'as_append_build_options(GUI ...)'
   foreach(P ${GUI_INCLUDE_DIRS})
@@ -202,11 +199,9 @@ include_directories("${_INC_DIR}" ${LOG_INCLUDE_DIR} ${GLOG_INCLUDE_DIR})
 as_source_group("Src" FILES ${gui_srcs} ${gui_hdrs})
 as_source_group("Include" DIRBASE "${CMAKE_CURRENT_LIST_DIR}/include" 
 		 FILES ${gui_ext_hdrs})
-# source_group("Src" FILES ${gui_srcs} ${gui_hdrs})
-# source_group("Include" FILES ${gui_ext_hdrs})
 
-as_glob_module_sources(HEADERS ${gui_ext_hdrs} ${OpenCV_INCLUDE_DIRS} ${HIK_INCLUDE_DIR} SOURCES ${gui_srcs} ${gui_hdrs})
-as_module_include_directories(${OpenCV_INCLUDE_DIRS} ${HIK_INCLUDE_DIR})
+as_glob_module_sources(HEADERS ${gui_ext_hdrs} ${OpenCV_INCLUDE_DIRS} SOURCES ${gui_srcs} ${gui_hdrs})
+as_module_include_directories(${OpenCV_INCLUDE_DIRS})
 
 if (OPTIMIZER_PACK)
     as_module_include_directories(${Opt_INCLUDE_DIR})
@@ -250,18 +245,6 @@ target_link_libraries( ${the_module}
         Qt5::PrintSupport
         Qt5::Charts
         Qt5::Network
-        Eigen3::Eigen
 	${Boost_LIBRARIES}
 )
-# target_link_libraries( ${the_module}
-    # PRIVATE
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_database001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_data001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_process001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_core001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_camera001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_grpc001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_hardware001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_imgproc001d.lib
-      # debug ${CMAKE_BINARY_DIR}/lib/Debug/as_io001d.lib
-# )
+

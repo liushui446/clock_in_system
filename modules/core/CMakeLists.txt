@@ -123,8 +123,7 @@ if(PARALLEL_ENABLE_PLUGINS)
 endif()
 
 as_create_module(${extra_libs})
-message("add extra_libs test")
-message("${extra_libs}")
+
 #在这链接了boost库
 as_target_link_libraries(${the_module} PRIVATE
     "${ZLIB_LIBRARIES}" "${OPENCL_LIBRARIES}" "${VA_LIBRARIES}"
@@ -134,9 +133,6 @@ as_target_link_libraries(${the_module} PRIVATE
     "${Boost_LIBRARIES}"
     yaml-cpp	
 )
-
-message("add extra_libs test")
-message("${the_module}")
 
 if(AS_CORE_EXCLUDE_C_API)
   as_target_compile_definitions(${the_module} PRIVATE "AS_EXCLUDE_C_API=1")

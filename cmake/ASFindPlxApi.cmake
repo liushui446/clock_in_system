@@ -1,9 +1,0 @@
-set(PLXAPI_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/include/")
-set(PLXAPI_LIB_DIR "${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/lib/")
-set(PLXAPI_LIB "${PLXAPI_LIB_DIR}/PlxApi.lib")
-
-file(COPY ${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/lib/PlxApi711_x64.dll DESTINATION ${PROJECT_BINARY_DIR}/bin/Debug)
-file(COPY ${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/lib/PlxApi711_x64.dll DESTINATION ${PROJECT_BINARY_DIR}/bin/Release)
-
-file(COPY ${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/lib/PlxApi820_x64.dll DESTINATION ${PROJECT_BINARY_DIR}/bin/Debug)
-file(COPY ${CMAKE_SOURCE_DIR}/3rdparty/PlxAPI/lib/PlxApi820_x64.dll DESTINATION ${PROJECT_BINARY_DIR}/bin/Release)

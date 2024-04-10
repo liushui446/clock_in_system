@@ -10,7 +10,7 @@ file(GLOB_RECURSE lib_hdrs_lib
 as_source_group("Include" DIRBASE "${CMAKE_CURRENT_LIST_DIR}/include" 
                 FILES ${lib_hdrs_lib} )
 
-as_glob_module_sources(HEADERS ${lib_hdrs_lib} ${EIGEN3_INCLUDE_DIRS})
-as_module_include_directories(${the_module} ${lib_hdrs_lib} ${EIGEN3_INCLUDE_DIRS})
+as_glob_module_sources(HEADERS ${lib_hdrs_lib})
+as_module_include_directories(${the_module} ${lib_hdrs_lib})
 list(APPEND extra_libs)
 as_create_module(${extra_libs})

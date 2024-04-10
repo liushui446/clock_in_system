@@ -37,5 +37,5 @@ endfunction()
 link_libraries(${AS_LINKER_LIBS})
 
 as_add_application(AS
-    MODULES as_core as_gui as_database as_camera as_data as_hardware as_imgproc as_io as_optimization as_process
+    MODULES as_core as_gui as_database as_data as_imgproc as_io as_process
     SRCS main.cpp)

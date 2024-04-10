@@ -11,12 +11,12 @@ if(OpenMP_FOUND)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-as_glob_module_sources(HEADERS ${OpenCV_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${CERES_INCLUDE_DIRS})
+as_glob_module_sources(HEADERS ${OpenCV_INCLUDE_DIRS})
 
 include_directories(${LOG_INCLUDE_DIR})
 
-as_module_include_directories(${OpenCV_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${CERES_INCLUDE_DIRS})
-list(APPEND extra_libs ${OpenCV_LIBS} ${CERES_LIBRARIES} ${PCL_LIBRARIES})
+as_module_include_directories(${OpenCV_INCLUDE_DIRS})
+list(APPEND extra_libs ${OpenCV_LIBS})
 
 file(GLOB_RECURSE lib_hdrs_lib
     "${CMAKE_CURRENT_LIST_DIR}/include/*.hpp"
@@ -31,7 +31,3 @@ as_glob_module_sources(HEADERS ${lib_hdrs_common} ${lib_hdrs_defect} ${lib_hdrs_
 as_module_include_directories(${the_module} ${lib_hdrs_common} ${lib_hdrs_defect}${lib_hdrs_lib} ${lib_hdrs_mark} ${lib_hdrs_libBinary})
 
 as_create_module(${extra_libs})
-
-
-message("add test3")
-message("${lib_hdrs_lib}")

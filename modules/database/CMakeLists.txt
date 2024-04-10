@@ -19,4 +19,4 @@ target_link_libraries( ${the_module}
 		debug ${SQLITE_LIB2D}
 		optimized ${SQLITE_LIB2}
 )
-include_directories("${_INC_DIR}" ${LOG_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
+include_directories("${_INC_DIR}" ${LOG_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS})

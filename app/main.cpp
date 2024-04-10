@@ -2,15 +2,12 @@
 #include <memory>
 #include <iostream>
 
-#include "as/camera.hpp"
 #include "as/core.hpp"
 #include "as/data.hpp"
 #include "as/database.hpp"
 #include "as/gui.hpp"
-#include "as/hardware.hpp"
 #include "as/imgproc.hpp"
 #include "as/io.hpp"
-#include "as/optimization.hpp"
 #include "as/process.hpp"
 
 #include "as/Common/DB_MGR.hpp"
